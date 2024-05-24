@@ -13,17 +13,16 @@ function run() {
   //   this.sell(this.asset(symbol), 1)
   // }
 
+  // if (this.barIndex % 5 === 0) {
+  //   this.closePositions()
+  // } else {
+  this.asset("MSFT")
+  this.print("SMA:", this.sma(10, "AAPL"))
 
-  if (this.barIndex % 5 === 0) {
-    this.closePositions()
-  } else {
-    for (const symbol of assets) {
-      this.buy(this.asset(symbol), 1)
-    }
+  for (const symbol of assets) {
+    this.buy(this.asset(symbol), 1)
   }
 
-  this.print('Hello World')
-  this.print(this.getOrders())
 }
 
 return { assets, window, run }

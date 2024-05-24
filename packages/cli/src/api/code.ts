@@ -13,7 +13,7 @@ export default () => {
    */
   const runZpCode = (code: string, bars, inputs: any = {}) => {
     const start = performance.now()
-    
+
     const zpEnv = new Env({ bars })
     zpEnv.bind('inputs', inputs)
     zpEnv.bind('barIndex', 1)
@@ -21,7 +21,7 @@ export default () => {
 
     zpEnv.call('setCash', inputs.initialCapital ?? 10_000)
     zpEnv.call('setPositions', inputs.openPositions ?? [])
-    
+
     const result = evalCode(zpEnv, code)
     const stop = performance.now()
     const inSeconds = (stop - start) / 1000
@@ -104,11 +104,11 @@ export default () => {
     return { symbols, maxWindow, settings }
   }
 
-  function getJsSymbols (code: string, openPositions: any = [], inputs: any = {}) {
+  function getJsSymbols(code: string, openPositions: any = [], inputs: any = {}) {
     const execFunc = new Function(code)
     const res = execFunc()
     const symbols = uniq([
-      ...res.assets,
+      ...uniq([res.assets, ...inputs.assets]),
       ...openPositions.map(p => p.symbol),
       ...(inputs.openPositions?.map(p => p.symbol) ?? [])
     ])
@@ -138,7 +138,7 @@ export default () => {
     const filePath = path.join(process.cwd(), fileName)
 
     if (!fs.existsSync(filePath)) {
-        throw new Error(`File "${fileName}" does not exist`)
+      throw new Error(`File "${fileName}" does not exist`)
     }
 
     return fs.readFileSync(filePath, 'utf8')

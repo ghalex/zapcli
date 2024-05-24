@@ -1,4 +1,4 @@
-// import { analyzers } from 'zptrade-backtest'
+import { analyzers } from 'zptrade-backtest'
 
 const config = {
   dataDir: "./dev/data",
@@ -29,8 +29,8 @@ const config = {
       assets: []
     },
     analyzers: [
-      // new analyzers.RetursAnalyzer(),
-      // new analyzers.PositionsAnalyzer(),
+      new analyzers.RetursAnalyzer(),
+      // new analyzers.PositionsAnalyzer()
       // new analyzers.TradesAnalyzer()
     ]
   }
