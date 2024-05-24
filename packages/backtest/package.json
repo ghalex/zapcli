@@ -1,6 +1,6 @@
 {
   "name": "zptrade-backtest",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "main": "dist/zptrade-backtest.cjs.js",
   "module": "dist/zptrade-backtest.es.js",
