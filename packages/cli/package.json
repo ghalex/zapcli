@@ -1,0 +1,70 @@
+{
+  "name": "zptrade-cli",
+  "version": "1.0.28",
+  "description": "A CLI tool for backtesting and trading",
+  "main": "dist/zptrade-cli.es.mjs",
+  "module": "dist/zptrade-cli.es.mjs",
+  "files": [
+    "dist",
+    "package.json",
+    "CHANGELOG.md"
+  ],
+  "bin": {
+    "zptrade": "dist/zptrade-cli.es.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "lint": "tsc",
+    "build": "rm -rf ./dist/ && rollup -c --bundleConfigAsCjs",
+    "prepack": "pnpm build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@types/cli-color": "^2.0.6",
+    "@types/cli-spinner": "^0.2.3",
+    "@types/configstore": "^6.0.2",
+    "@types/figlet": "^1.5.8",
+    "@types/listr": "^0.14.9",
+    "@types/node": "^20.12.12",
+    "@types/prompts": "^2.4.9",
+    "@types/ramda": "^0.30.0",
+    "@types/shelljs": "^0.8.15",
+    "@types/signale": "^1.4.7",
+    "esbuild": "^0.21.3",
+    "nodemon": "^3.1.0",
+    "rollup": "^4.17.2",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "rollup-plugin-node-externals": "^7.1.2",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "tsx": "^4.10.4",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@zapant/calendar": "^1.0.0",
+    "axios": "^1.6.8",
+    "cli-color": "^2.0.4",
+    "commander": "^12.0.0",
+    "configstore": "^6.0.0",
+    "dayjs": "^1.11.11",
+    "figlet": "^1.7.0",
+    "ora": "^8.0.1",
+    "prompts": "^2.4.2",
+    "ramda": "^0.30.0",
+    "shelljs": "^0.8.5",
+    "voca": "^1.4.1",
+    "zplang": "^1.0.54",
+    "zptrade": "workspace:*",
+    "zptrade-backtest": "workspace:*"
+  }
+}

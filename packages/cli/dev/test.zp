@@ -1,0 +1,15 @@
+;; Loops a list a symbols and buys 1 share of each
+;; #pragma timeframe 15
+
+(def symbols [
+  "AAPL",
+  "MSFT"
+])
+
+
+(loop symbol in symbols
+  (buy {symbol} 1)
+)
+
+(print "barIndex" (barIndex ))
+(print "date" (date ))

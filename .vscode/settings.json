@@ -1,0 +1,8 @@
+{
+    "editor.renderWhitespace": "boundary",
+    "files.associations": {
+        "*.zp": "clojure"
+    },
+    "npm.packageManager": "pnpm",
+    "editor.minimap.enabled": false
+}
