@@ -8,3 +8,4 @@ coverage
 
 dist
 packages/cli/dev/data/**/*
+.DS_Store
