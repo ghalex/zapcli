@@ -108,7 +108,7 @@ export default () => {
     const execFunc = new Function(code)
     const res = execFunc()
     const symbols = uniq([
-      ...uniq([res.assets, ...inputs.assets]),
+      ...uniq([...res.assets, ...inputs.assets]),
       ...openPositions.map(p => p.symbol),
       ...(inputs.openPositions?.map(p => p.symbol) ?? [])
     ])
