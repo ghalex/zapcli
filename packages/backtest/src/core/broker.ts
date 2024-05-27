@@ -87,7 +87,7 @@ class Broker {
   canFill(order: any, bar: any) {
     const fillCost = bar.close * order.units
     const fillCommision = this.comission * fillCost
-    const p = this.positions.find((p: any) => p.symbol === order.symbol)
+    const p = this.getOpenPositions().find((p: any) => p.symbol === order.symbol)
 
     if (!p) {
       return this.cash >= (fillCost + fillCommision)
@@ -149,7 +149,7 @@ class Broker {
   }
 
   executeOrder(order: any) {
-    const p = this.positions.filter(p => !p.closeDate).find((p: any) => p.symbol === order.symbol)
+    const p = this.getOpenPositions().find((p: any) => p.symbol === order.symbol)
 
     if (p) {
       if (this.sameSide(p, order)) {
