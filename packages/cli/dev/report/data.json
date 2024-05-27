@@ -88,8 +88,20 @@
         "cash": 1645.82,
         "pl": 275.13
       }
-    ]
+    ],
+    "trades": {
+      "nbOfTrades": 2,
+      "nbOfWinningTrades": 2,
+      "nbOfLosingTrades": 0,
+      "avgWinningTrade": 24.18,
+      "avgLosingTrade": 0,
+      "winRate": 1,
+      "bestTrade": 36.66643066406266,
+      "worstTrade": 11.70133056640617,
+      "maxTradeDuration": 1641600,
+      "avgTradeDuration": 1641600
+    }
   },
   "file": "./dev/test.js",
-  "dateGenerated": "2024-05-24T15:01:02.411Z"
+  "dateGenerated": "2024-05-27T12:55:37.359Z"
 }

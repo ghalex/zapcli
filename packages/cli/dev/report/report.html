@@ -5,6 +5,10 @@
   <title>Report</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    body {
+      background-color: #fbfcfe;
+    }
+
     figure {
       margin: 0;
       padding: 8px;
@@ -24,7 +28,7 @@
 </head>
 
 <body>
-  <div class="p-8">
+  <div class="p-8 bg-white shadow">
     <h1 class="text-4xl mb-1">Backtest Report</h1>
     <p class="text-sm"><b>Date generated</b>: <span id="date"></span></p>
     <p class="text-sm"><b>File</b>: <span id="file"></span></p>
@@ -32,7 +36,7 @@
     <p class="text-sm"><b>End Cash</b>: <span id="cash2"></span></p>
   </div>
   <hr />
-  <div id="container" class="grid grid-cols-2 p-8 gap-4"></div>
+  <div id="container" class="grid grid-cols-2 p-4 gap-4"></div>
 
   <script type="importmap">
     {
@@ -58,7 +62,11 @@
 
     function run(data) {
       const plots = Object.keys(data.analyzers).map(name => renderReport(name, data.analyzers[name])).flat()
-      plots.forEach(plot => container.append(plot))
+      plots.forEach(plot => {
+        plot.classList.add(..."shadow bg-white".split(" "))
+        console.log(plot)
+        container.append(plot)
+      })
 
       document.getElementById('file').textContent = data.file;
       document.getElementById('cash1').textContent = data.startCash;

@@ -16,8 +16,8 @@ function run() {
   // if (this.barIndex % 5 === 0) {
   //   this.closePositions()
   // } else {
-  this.asset("MSFT")
-  this.print("SMA:", this.sma(10, "AAPL"))
+  //this.asset("MSFT")
+  //this.print("SMA:", this.sma(10, "AAPL"))
 
   for (const symbol of assets) {
     this.buy(this.asset(symbol), 1)

@@ -31,7 +31,7 @@ const config = {
     analyzers: [
       new analyzers.RetursAnalyzer(),
       // new analyzers.PositionsAnalyzer()
-      // new analyzers.TradesAnalyzer()
+      new analyzers.TradesAnalyzer()
     ]
   }
 }
