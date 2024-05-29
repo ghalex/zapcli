@@ -1,4 +1,10 @@
-# zptrade-reports
+# @zapatrade/reports
+
+## 1.0.5
+
+### Patch Changes
+
+- small changes to names
 
 ## 1.0.4
 

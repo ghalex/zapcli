@@ -1,6 +1,6 @@
 {
   "name": "@zaptrade/core",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "main": "dist/zaptrade-core.cjs.js",
   "module": "dist/zaptrade-core.es.js",
@@ -24,8 +24,6 @@
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.12",
-    "@typescript-eslint/eslint-plugin": "^7.9.0",
-    "@typescript-eslint/parser": "^7.9.0",
     "dotenv-flow": "^4.1.0",
     "jest": "^29.7.0",
     "module-alias": "^2.2.3",

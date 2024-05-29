@@ -1,4 +1,4 @@
-import { analyzers } from 'zptrade-backtest'
+import { analyzers } from '@zaptrade/backtest'
 
 
 

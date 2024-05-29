@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "publish": "pnpm --filter './packages/**' publish",
-    "cli": "pnpm --filter @ghalex/zapcli dev"
+    "cli": "pnpm --filter @zaptrade/cli dev"
   },
   "devDependencies": {
     "eslint": "^8.42.0",

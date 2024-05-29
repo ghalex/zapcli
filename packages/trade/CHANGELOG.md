@@ -1,5 +1,11 @@
 # zplang-backtest
 
+## 1.0.9
+
+### Patch Changes
+
+- small changes to names
+
 ## 1.0.8
 
 ### Patch Changes
