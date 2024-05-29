@@ -63,6 +63,7 @@ const generateClosePositions = (openPositions: Position[], bars: Bars) => {
         dateFormatted: dayjs(datetime).toISOString(),
         price: today.close,
         units: position.units ?? 0,
+        isClose: true,
         action,
         status: 'created',
       }

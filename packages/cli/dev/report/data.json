@@ -1,7 +1,7 @@
 {
   "startCash": 10000,
-  "endCash": 10275.14,
-  "pl": 275.13,
+  "endCash": 10089.99,
+  "pl": 89.98,
   "analyzers": {
     "returns": [
       {
@@ -31,77 +31,133 @@
       {
         "date": "2024-05-07",
         "value": 10046.56,
-        "cash": 7087.86,
+        "cash": 10046.56,
         "pl": 46.55
       },
       {
         "date": "2024-05-08",
-        "value": 10054.26,
-        "cash": 6494.58,
-        "pl": 54.26
+        "value": 10046.56,
+        "cash": 9453.28,
+        "pl": 46.55
       },
       {
         "date": "2024-05-09",
-        "value": 10075.92,
-        "cash": 5897.69,
-        "pl": 75.92
+        "value": 10050.17,
+        "cash": 8856.39,
+        "pl": 50.17
       },
       {
         "date": "2024-05-10",
-        "value": 10082.22,
-        "cash": 5299.9,
-        "pl": 82.21
+        "value": 10051.97,
+        "cash": 8258.6,
+        "pl": 51.96
       },
       {
         "date": "2024-05-13",
-        "value": 10099.9,
-        "cash": 4699.9,
-        "pl": 99.89
+        "value": 10058.6,
+        "cash": 7658.6,
+        "pl": 58.6
       },
       {
         "date": "2024-05-14",
-        "value": 10135.81,
-        "cash": 4095.91,
-        "pl": 135.8
+        "value": 10074.56,
+        "cash": 10074.56,
+        "pl": 74.55
       },
       {
         "date": "2024-05-15",
-        "value": 10223.91,
-        "cash": 3483.11,
-        "pl": 223.9
+        "value": 10074.56,
+        "cash": 9461.76,
+        "pl": 74.55
       },
       {
         "date": "2024-05-16",
-        "value": 10202.24,
-        "cash": 2872.28,
-        "pl": 202.23
+        "value": 10072.59,
+        "cash": 8850.93,
+        "pl": 72.59
       },
       {
         "date": "2024-05-17",
-        "value": 10193.24,
-        "cash": 2262.2,
-        "pl": 193.23
+        "value": 10071.09,
+        "cash": 8240.85,
+        "pl": 71.09
       },
       {
         "date": "2024-05-20",
-        "value": 10275.14,
-        "cash": 1645.82,
-        "pl": 275.13
+        "value": 10089.99,
+        "cash": 7624.47,
+        "pl": 89.98
       }
     ],
-    "trades": {
-      "nbOfTrades": 2,
-      "nbOfWinningTrades": 2,
-      "nbOfLosingTrades": 0,
-      "avgWinningTrade": 24.18,
-      "avgLosingTrade": 0,
-      "winRate": 1,
-      "bestTrade": 36.66643066406266,
-      "worstTrade": 11.70133056640617,
-      "maxTradeDuration": 1641600,
-      "avgTradeDuration": 1641600
-    }
+    "positions": [
+      {
+        "symbol": "AAPL",
+        "openDate": "2024-05-01T04:00",
+        "openPrice": 179.49125,
+        "openBar": 1,
+        "closeDate": "2024-05-07T04:00",
+        "closePrice": 182.4,
+        "closeBar": 5,
+        "units": 4,
+        "side": "long"
+      },
+      {
+        "symbol": "MSFT",
+        "openDate": "2024-05-01T04:00",
+        "openPrice": 407.5325,
+        "openBar": 1,
+        "closeDate": "2024-05-07T04:00",
+        "closePrice": 409.34,
+        "closeBar": 5,
+        "units": 4,
+        "side": "long"
+      },
+      {
+        "symbol": "AAPL",
+        "openDate": "2024-05-08T04:00",
+        "openPrice": 184.81625000000003,
+        "openBar": 6,
+        "closeDate": "2024-05-14T04:00",
+        "closePrice": 187.43,
+        "closeBar": 10,
+        "units": 4,
+        "side": "long"
+      },
+      {
+        "symbol": "MSFT",
+        "openDate": "2024-05-08T04:00",
+        "openPrice": 413.40250000000003,
+        "openBar": 6,
+        "closeDate": "2024-05-14T04:00",
+        "closePrice": 416.56,
+        "closeBar": 10,
+        "units": 4,
+        "side": "long"
+      },
+      {
+        "symbol": "AAPL",
+        "openDate": "2024-05-15T04:00",
+        "openPrice": 190.4325,
+        "openBar": 11,
+        "closeDate": "2024-05-20T04:00",
+        "closePrice": 191.04,
+        "closeBar": 14,
+        "units": 4,
+        "side": "long"
+      },
+      {
+        "symbol": "MSFT",
+        "openDate": "2024-05-15T04:00",
+        "openPrice": 423.23124999999993,
+        "openBar": 11,
+        "closeDate": "2024-05-20T04:00",
+        "closePrice": 425.34,
+        "closeBar": 14,
+        "units": 4,
+        "side": "long"
+      }
+    ]
   },
   "file": "./dev/test.js",
-  "dateGenerated": "2024-05-27T12:55:37.359Z"
+  "dateGenerated": "2024-05-28T16:37:20.862Z"
 }

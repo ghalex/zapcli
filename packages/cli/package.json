@@ -1,16 +1,16 @@
 {
-  "name": "zptrade-cli",
+  "name": "zapcli",
   "version": "1.0.30",
   "description": "A CLI tool for backtesting and trading",
-  "main": "dist/zptrade-cli.es.mjs",
-  "module": "dist/zptrade-cli.es.mjs",
+  "main": "dist/zapcli.es.mjs",
+  "module": "dist/zapcli.es.mjs",
   "files": [
     "dist",
     "package.json",
     "CHANGELOG.md"
   ],
   "bin": {
-    "zptrade": "dist/zptrade-cli.es.mjs"
+    "zapcli": "dist/zapcli.es.mjs"
   },
   "engines": {
     "node": ">=20.0.0"

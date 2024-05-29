@@ -3,7 +3,7 @@ const esbuild = require('rollup-plugin-esbuild').default
 const json = require('@rollup/plugin-json')
 const commonjs = require('@rollup/plugin-commonjs')
 
-const name = 'zptrade-cli'
+const name = 'zapcli'
 
 module.exports = [
   {

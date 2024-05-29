@@ -1,5 +1,7 @@
 import { analyzers } from 'zptrade-backtest'
 
+
+
 const config = {
   dataDir: "./dev/data",
   apiUrl: "http://zapant.com/api",
@@ -30,8 +32,8 @@ const config = {
     },
     analyzers: [
       new analyzers.RetursAnalyzer(),
-      // new analyzers.PositionsAnalyzer()
-      new analyzers.TradesAnalyzer()
+      new analyzers.PositionsAnalyzer()
+      // new analyzers.TradesAnalyzer()
     ]
   }
 }
