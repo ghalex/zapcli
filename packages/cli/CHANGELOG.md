@@ -1,5 +1,14 @@
 # zptrade-cli
 
+## 1.0.31
+
+### Patch Changes
+
+- move all packages under @zaptrade
+- Updated dependencies
+  - @zaptrade/backtest@1.0.11
+  - @zaptrade/core@1.0.8
+
 ## 1.0.30
 
 ### Patch Changes

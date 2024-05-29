@@ -1,5 +1,11 @@
 # zplang-backtest
 
+## 1.0.8
+
+### Patch Changes
+
+- move all packages under @zaptrade
+
 ## 1.0.7
 
 ### Patch Changes

@@ -1,12 +1,12 @@
 {
   "name": "root",
   "version": "0.0.0",
-  "description": "Zaplang monorepo",
+  "description": "ZapTrade monorepo",
   "author": "Alexandru Ghiura @ghalex",
   "private": true,
   "scripts": {
     "publish": "pnpm --filter './packages/**' publish",
-    "cli": "pnpm --filter zptrade-cli dev"
+    "cli": "pnpm --filter @ghalex/zapcli dev"
   },
   "devDependencies": {
     "eslint": "^8.42.0",

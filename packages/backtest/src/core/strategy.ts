@@ -1,5 +1,5 @@
 import { Env, evalCode } from 'zplang'
-import { createJsEnv } from 'zptrade'
+import { createJsEnv } from '@zaptrade/core'
 import Broker from "./broker"
 
 

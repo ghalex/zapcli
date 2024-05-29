@@ -35,15 +35,15 @@ importers:
 
   packages/backtest:
     dependencies:
+      '@zaptrade/core':
+        specifier: workspace:*
+        version: link:../trade
       dayjs:
         specifier: ^1.11.11
         version: 1.11.11
       zplang:
         specifier: ^1.0.54
         version: 1.0.54
-      zptrade:
-        specifier: workspace:*
-        version: link:../trade
     devDependencies:
       '@types/express':
         specifier: ^4.17.21
@@ -93,6 +93,12 @@ importers:
       '@zapant/calendar':
         specifier: ^1.0.0
         version: 1.0.1
+      '@zaptrade/backtest':
+        specifier: workspace:*
+        version: link:../backtest
+      '@zaptrade/core':
+        specifier: workspace:*
+        version: link:../trade
       axios:
         specifier: ^1.6.8
         version: 1.7.2
@@ -129,12 +135,6 @@ importers:
       zplang:
         specifier: ^1.0.54
         version: 1.0.54
-      zptrade:
-        specifier: workspace:*
-        version: link:../trade
-      zptrade-backtest:
-        specifier: workspace:*
-        version: link:../backtest
     devDependencies:
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7

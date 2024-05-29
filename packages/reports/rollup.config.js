@@ -4,9 +4,7 @@ const esbuild = require('rollup-plugin-esbuild').default
 const commonjs = require('@rollup/plugin-commonjs')
 const { nodeResolve } = require('@rollup/plugin-node-resolve')
 
-const pkg = require('./package.json')
-
-const name = pkg.name
+const name = 'zaptrade-reports'
 
 module.exports = [
   {

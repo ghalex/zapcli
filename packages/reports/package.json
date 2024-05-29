@@ -1,10 +1,10 @@
 {
-  "name": "zptrade-reports",
-  "version": "1.0.3",
+  "name": "@zaptrade/reports",
+  "version": "1.0.4",
   "description": "",
-  "main": "dist/zptrade-reports.cjs.js",
-  "module": "dist/zptrade-reports.es.js",
-  "types": "dist/zptrade-reports.d.ts",
+  "main": "dist/zaptrade-reports.cjs.js",
+  "module": "dist/zaptrade-reports.es.js",
+  "types": "dist/zaptrade-reports.d.ts",
   "files": [
     "dist",
     "package.json",

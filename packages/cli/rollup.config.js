@@ -24,11 +24,11 @@ module.exports = [
       'node:os',
       'node:zlib',
       'zplang',
-      'zptrade',
-      'zptrade-backtest',
+      '@zaptrade/core',
+      '@zaptrade/backtest',
+      '@zapant/calendar',
       'dayjs',
-      'voca',
-      '@zapant/calendar'
+      'voca'
     ],
     plugins: [
       esbuild(),

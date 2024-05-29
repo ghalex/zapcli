@@ -1,10 +1,10 @@
 {
-  "name": "zptrade-backtest",
-  "version": "1.0.10",
+  "name": "@zaptrade/backtest",
+  "version": "1.0.11",
   "description": "",
-  "main": "dist/zptrade-backtest.cjs.js",
-  "module": "dist/zptrade-backtest.es.js",
-  "types": "dist/zptrade-backtest.d.ts",
+  "main": "dist/zaptrade-backtest.cjs.js",
+  "module": "dist/zaptrade-backtest.es.js",
+  "types": "dist/zaptrade-backtest.d.ts",
   "files": [
     "dist",
     "package.json",
@@ -37,8 +37,8 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@zaptrade/core": "workspace:*",
     "dayjs": "^1.11.11",
-    "zplang": "^1.0.54",
-    "zptrade": "workspace:*"
+    "zplang": "^1.0.54"
   }
 }

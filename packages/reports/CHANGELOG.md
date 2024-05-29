@@ -1,5 +1,11 @@
 # zptrade-reports
 
+## 1.0.4
+
+### Patch Changes
+
+- move all packages under @zaptrade
+
 ## 1.0.3
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # zptrade-backtest
 
+## 1.0.11
+
+### Patch Changes
+
+- move all packages under @zaptrade
+- Updated dependencies
+  - @zaptrade/core@1.0.8
+
 ## 1.0.10
 
 ### Patch Changes

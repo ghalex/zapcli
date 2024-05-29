@@ -1,10 +1,10 @@
 {
-  "name": "zptrade",
-  "version": "1.0.7",
+  "name": "@zaptrade/core",
+  "version": "1.0.8",
   "description": "",
-  "main": "dist/zptrade.cjs.js",
-  "module": "dist/zptrade.es.js",
-  "types": "dist/zptrade.d.ts",
+  "main": "dist/zaptrade-core.cjs.js",
+  "module": "dist/zaptrade-core.es.js",
+  "types": "dist/zaptrade-core.d.ts",
   "files": [
     "dist",
     "package.json",

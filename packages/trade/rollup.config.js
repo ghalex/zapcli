@@ -3,7 +3,7 @@ const dts = require('rollup-plugin-dts').default
 const esbuild = require('rollup-plugin-esbuild').default
 const pkg = require('./package.json')
 
-const name = pkg.name
+const name = 'zaptrade-core'
 // const projectRoot = path.resolve(__dirname, '.')
 
 module.exports = [
