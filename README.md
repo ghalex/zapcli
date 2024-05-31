@@ -35,7 +35,7 @@
 
 ## Documentation
 
-To learn more about ZapCLI read the documentation [here](https://zapcli.org/)
+To learn more about ZapCLI read the documentation [here](https://zapcli.com/)
 
 ## Get Started
 
@@ -49,9 +49,9 @@ Useful links:
 
 - [Getting Started](https://zapcli.com/getting-started/) full guide.
 
-- [View on Github](https://github.com/ghalex/vue3-charts)
+- [View on Github](https://github.com/ghalex/zapcli)
 
 ## License
 
-Copyright (c) 2021 [Vue3-Charts Contributors](https://github.com/ghalex/vue3-charts/graphs/contributors)
-Licensed under the [MIT license](https://github.com/ghalex/vue3-charts/blob/HEAD/LICENSE).
+Copyright (c) 2021 [ZapCLI Contributors](https://github.com/ghalex/zapcli/graphs/contributors)
+Licensed under the [MIT license](https://github.com/ghalex/zapcli/blob/HEAD/LICENSE).
