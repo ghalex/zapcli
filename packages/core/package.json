@@ -17,6 +17,10 @@
     "test": "jest --verbose",
     "prepack": "pnpm build"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ghalex/zapcli"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

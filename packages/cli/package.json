@@ -15,6 +15,10 @@
   "engines": {
     "node": ">=20.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ghalex/zapcli"
+  },
   "scripts": {
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
