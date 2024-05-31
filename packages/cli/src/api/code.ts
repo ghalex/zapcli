@@ -2,7 +2,7 @@ import { Env, evalCode } from 'zplang'
 import { uniq } from 'ramda'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-import { createJsEnv } from '@zaptrade/core'
+import { createJsEnv } from '@zapcli/core'
 
 export default () => {
   /**

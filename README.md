@@ -12,11 +12,11 @@
 </p>
 
 <p align="center">
-  <a title="Total downloads" href="https://www.npmjs.com/package/@zaptrade/cli">
-    <img src="https://img.shields.io/npm/dm/@zaptrade/cli.svg?style=flat-square">
+  <a title="Total downloads" href="https://www.npmjs.com/package/@zapcli/cli">
+    <img src="https://img.shields.io/npm/dm/@zapcli/cli.svg?style=flat-square">
   </a>
-  <a title="Current version" href="https://www.npmjs.com/package/@zaptrade/cli">
-    <img src="https://img.shields.io/npm/v/@zaptrade/cli.svg?style=flat-square">
+  <a title="Current version" href="https://www.npmjs.com/package/@zapcli/cli">
+    <img src="https://img.shields.io/npm/v/@zapcli/cli.svg?style=flat-square">
   </a>
   <a title="MIT License" href="LICENSE">
     <img alt="GitHub" src="https://img.shields.io/github/license/ghalex/zapcli?style=flat-square">
@@ -40,7 +40,7 @@ To learn more about ZapCLI read the documentation [here](https://zapcli.com/)
 ## Get Started
 
 ```bash
-npm i @zaptrade/cli
+npm i @zapcli/cli
 zapcli create MyProject
 zapcli backtest ./src/hello.zp
 ```

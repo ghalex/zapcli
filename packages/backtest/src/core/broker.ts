@@ -1,5 +1,5 @@
 import { floor } from '../utils'
-import { helpers } from '@zaptrade/core'
+import { helpers } from '@zapcli/core'
 
 class Broker {
   cash: number = 10_000

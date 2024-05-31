@@ -1,4 +1,4 @@
-import { analyzers } from '@zaptrade/backtest'
+import { analyzers } from '@zapcli/backtest'
 
 const config = {
   dataDir: "./dev/data",

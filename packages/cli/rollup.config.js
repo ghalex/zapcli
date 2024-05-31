@@ -24,8 +24,8 @@ module.exports = [
       'node:os',
       'node:zlib',
       'zplang',
-      '@zaptrade/core',
-      '@zaptrade/backtest',
+      '@zapcli/core',
+      '@zapcli/backtest',
       '@zapant/calendar',
       'dayjs',
       'voca'
