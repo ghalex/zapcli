@@ -19,7 +19,7 @@
     <img src="https://img.shields.io/npm/v/@zaptrade/cli.svg?style=flat-square">
   </a>
   <a title="MIT License" href="LICENSE">
-    <img alt="GitHub" src="https://img.shields.io/github/license/ghalex/zaptrade?style=flat-square">
+    <img alt="GitHub" src="https://img.shields.io/github/license/ghalex/zapcli?style=flat-square">
   </a>
   <br>
   <br>
@@ -54,4 +54,4 @@ Useful links:
 ## License
 
 Copyright (c) 2021 [ZapCLI Contributors](https://github.com/ghalex/zapcli/graphs/contributors)
-Licensed under the [MIT license](https://github.com/ghalex/zapcli/blob/HEAD/LICENSE).
+Licensed under the [GNU General License](https://github.com/ghalex/zapcli/blob/HEAD/LICENSE).
