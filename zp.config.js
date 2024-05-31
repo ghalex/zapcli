@@ -1,7 +1,5 @@
 import { analyzers } from '@zaptrade/backtest'
 
-
-
 const config = {
   dataDir: "./dev/data",
   apiUrl: "http://zapant.com/api",

@@ -1,25 +1,57 @@
-# @zaptrade/cli
+<p align="center">
+  <br>
+  <a href="#">
+    <img src="https://zapcli.com/zaplogo.png" width="100"/>
+  </a>
+</p>
 
-## Description
+<h1 align="center">ZapCli</h1>
+<h3 align="center">The quickest way to test and improve your trading strategies!</h3>
+<p align="center">
+<b>ZapCli</b> is an open-source algorithmic trading engine that simplifies the process of backtesting your trading strategies.
+</p>
 
-ZapCLI is a command-line interface (CLI) tool that facilitates the backtesting of trading strategies using the `zplang` language or `javascript`.
+<p align="center">
+  <a title="Total downloads" href="https://www.npmjs.com/package/@zaptrade/cli">
+    <img src="https://img.shields.io/npm/dm/@zaptrade/cli.svg?style=flat-square">
+  </a>
+  <a title="Current version" href="https://www.npmjs.com/package/@zaptrade/cli">
+    <img src="https://img.shields.io/npm/v/@zaptrade/cli.svg?style=flat-square">
+  </a>
+  <a title="MIT License" href="LICENSE">
+    <img alt="GitHub" src="https://img.shields.io/github/license/ghalex/zaptrade?style=flat-square">
+  </a>
+  <br>
+  <br>
+</p>
 
-This tool allows traders and developers to test their trading strategies by simulating trades on historical market data. It supports two languages: zplang, a domain-specific language for trading strategies, and JavaScript, a widely-used programming language.
 
-By using ZapCLI, users can define their trading strategies, specify the historical data to test against, and evaluate the performance of their strategies based on various metrics such as profit, loss, and risk.
-
-This CLI tool provides a convenient way to automate the backtesting process, enabling traders to iterate and refine their strategies more efficiently. It also offers flexibility by supporting multiple languages, allowing users to choose the language that best suits their needs and preferences.
-
-For more information on how to use ZapCLI and its available commands, please refer to the documentation or the project's README file.
-
-Note: ZapCLI is an open-source project and is not affiliated with any specific trading platform or brokerage.
+## ZapCLI
 
 
-## Installation
+- 💡 Intuitive
+- 🔌 Extensible
+- 📦 Extremely easy to use
 
-To install the ZapCLI, you can use npm:
+## Documentation
 
+To learn more about ZapCLI read the documentation [here](https://zapcli.org/)
+
+## Get Started
+
+```bash
+npm i @zaptrade/cli
+zapcli create MyProject
+zapcli backtest ./src/hello.zp
 ```
-npm i -g ZapCLI
-```
 
+Useful links:
+
+- [Getting Started](https://zapcli.com/getting-started/) full guide.
+
+- [View on Github](https://github.com/ghalex/vue3-charts)
+
+## License
+
+Copyright (c) 2021 [Vue3-Charts Contributors](https://github.com/ghalex/vue3-charts/graphs/contributors)
+Licensed under the [MIT license](https://github.com/ghalex/vue3-charts/blob/HEAD/LICENSE).
