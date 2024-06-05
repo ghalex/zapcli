@@ -41,7 +41,7 @@ const closePosition = (position: Position, order: FilledOrder): Position => {
     closeDate: order.fillDate,
     closePrice: order.fillPrice,
     closeBar: order.fillBar,
-    units: position.units,
+    units: order.units,
     side: position.side
   }
 
@@ -64,6 +64,7 @@ const generateClosePositions = (openPositions: Position[], bars: Bars) => {
         price: today.close,
         units: position.units ?? 0,
         isClose: true,
+        value: today.close * (position.units ?? 0),
         action,
         status: 'created',
       }

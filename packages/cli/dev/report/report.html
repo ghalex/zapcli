@@ -61,6 +61,7 @@
       .catch(error => console.error(error))
 
     function run(data) {
+      console.log(data)
       const plots = Object.keys(data.analyzers).map(name => renderReport(name, data.analyzers[name])).flat()
       plots.forEach(plot => {
         plot.classList.add(..."shadow bg-white".split(" "))

@@ -12,6 +12,9 @@ class RetursReport {
       }
     })
 
+    const dataSize = plotData.map(d => d.value).length
+    const filterPoints = d => d.date.getDate() === 1 //dataSize > 45 ? d.date.getDate() % Math.round(dataSize / 50) === 0 : true
+
     const plot1 = Plot.plot({
       inset: 0,
       marginLeft: 60,
@@ -21,9 +24,9 @@ class RetursReport {
       y: { grid: true, tickFormat: val => formatNumber(val), insetTop: 15, label: "Cash & Value" },
       marks: [
         Plot.frame(),
-        Plot.dot(plotData, { x: "date", y: "value", fill: 'gray', stroke: 'black', tip: true }),
+        Plot.dot(plotData, { x: "date", y: "value", fill: 'green', r: 3, stroke: 'green', tip: true, filter: filterPoints }),
         Plot.lineY(plotData, { x: "date", y: "value" }),
-        Plot.dot(plotData, { x: "date", y: "cash", fill: 'gray', stroke: 'red', tip: true }),
+        Plot.dot(plotData, { x: "date", y: "cash", fill: 'gray', stroke: 'red', tip: true, filter: filterPoints }),
         Plot.lineY(plotData, { x: "date", y: "cash", stroke: 'red' })
       ]
     }) as HTMLElement
@@ -37,7 +40,7 @@ class RetursReport {
       y: { grid: true, tickFormat: val => formatNumber(val), label: "P&L" },
       marks: [
         Plot.frame(),
-        Plot.dot(plotData, { x: "date", y: "pl", fill: 'gray', stroke: 'black', tip: true }),
+        Plot.dot(plotData, { x: "date", y: "pl", fill: 'gray', stroke: 'black', tip: true, filter: filterPoints }),
         Plot.lineY(plotData, { x: "date", y: "pl" })
       ]
     }) as HTMLElement

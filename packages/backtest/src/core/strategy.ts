@@ -138,7 +138,7 @@ class Strategy {
       console.log(stdout)
     }
 
-    this.analyzers.forEach(analyzer => analyzer.next?.())
+    this.analyzers.forEach(analyzer => analyzer.next?.({ orders, executedOrders }))
 
     return executedOrders
   }
@@ -205,6 +205,10 @@ class Strategy {
 
   public onPosition(position) {
     this.analyzers.forEach(analyzer => analyzer.onPosition?.(position))
+  }
+
+  public onCash(oldCash, newCash) {
+    this.analyzers.forEach(analyzer => analyzer.onCash?.(oldCash, newCash))
   }
 }
 
