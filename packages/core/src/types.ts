@@ -27,6 +27,7 @@ export interface Order {
   status: OrderStatus
   leverage?: number
   error?: string
+  value?: number
   isClose?: boolean
 }
 

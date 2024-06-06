@@ -17,8 +17,6 @@ class DrawDownAnalyzer extends BaseAnalyzer {
   private maxValue = 0
   private len = 0
   private startDate = ''
-  private endDate = ''
-
 
   public init(): boolean {
     return true
@@ -57,7 +55,6 @@ class DrawDownAnalyzer extends BaseAnalyzer {
   }
 
   end(): void {
-    const date = dayjs(this.strategy.currentDate).format('YYYY-MM-DD')
     const itemIdx = this.data.drawDowns.findIndex(i => i.len === this.data.maxDrawDownDuration)
 
     if (itemIdx > -1) {
@@ -69,11 +66,6 @@ class DrawDownAnalyzer extends BaseAnalyzer {
   }
 
   toConsole(): void {
-    // if (this.data.length === 0) {
-    //   console.log('No positions generated.')
-    //   return
-    // }
-
     const { drawDowns, ...rest } = this.data
     console.table({
       ...rest,

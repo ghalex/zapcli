@@ -20,6 +20,7 @@ abstract class BaseAnalyzer {
 
   public onOrder(order) { }
   public onPosition(position) { }
+  public onCash(oldCash, newCash) { }
 
   start() { }
   end() { }

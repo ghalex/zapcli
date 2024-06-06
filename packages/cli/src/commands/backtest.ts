@@ -31,7 +31,7 @@ export default () => {
     .argument('file', 'strategy to backtest')
     .option('-d1, --startDate <startDate>', 'backtest start date')
     .option('-d2, --endDate <endDate>', 'backtest end date')
-    .option('-m, --market <market>', 'market to use', 'stocks')
+    .option('-m, --market <market>', 'market to use')
     .option('-s, --save <file>', 'save result to file')
     .option('-v, --verbose', 'verbose mode', false)
     .option('-a, --analyzers <analyzers...>', 'analyzers to use')
@@ -51,6 +51,8 @@ export default () => {
         opts.save = opts.save ?? config.backtest?.saveResult
         opts.market = opts.market ?? config.backtest?.market ?? 'stocks'
 
+        // console.log(config.backtest)
+        // console.log(opts)
         const dates = calendar.getDays({ start: opts.startDate, end: opts.endDate }, opts.market).map(x => x.date) //allDatas[0].map(x => dayjs(x.date).format('YYYY-MM-DD')).slice(0, parseInt(opts.window)).reverse()
         const window = dates.length
 

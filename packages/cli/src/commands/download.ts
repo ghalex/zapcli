@@ -8,7 +8,7 @@ const program = new Command('download')
 // -d parameter ()
 export default () => {
   program
-    .description('download data from zapant.com')
+    .description('Download data using data provider. Default Zapant (htts://zapant.com)')
     .option('-s, --symbols <symbols>', 'comma separated list of symbols')
     .option('-w, --window <window>', 'window size')
     .option('-r, --resolution [resolution]', 'resolution', '1440')

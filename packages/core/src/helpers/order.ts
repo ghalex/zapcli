@@ -28,7 +28,7 @@ const createOrdersUnits = (symbols: string[], weights: Record<string, number>, u
       status: 'created'
     }
 
-    res.push(order)
+    res.push({ ...order, value: order.units * order.price })
   }
 
 
@@ -64,7 +64,7 @@ const createOrdersAmount = (symbols: string[], weights: Record<string, number>, 
       status: 'created'
     }
 
-    res.push(order)
+    res.push({ ...order, value: order.units * order.price })
   }
 
   return res
@@ -92,9 +92,13 @@ const mergeOrders = (orders: Order[]): Order[] => {
   }).filter(order => order.units > 0) as Order[]
 }
 
+const sameSide = (order, position) => {
+  return (position.side === 'long' && order.action === 'buy') || (position.side === 'short' && order.action === 'sell')
+}
 
 export default {
   createOrdersUnits,
   createOrdersAmount,
+  sameSide,
   mergeOrders
 }

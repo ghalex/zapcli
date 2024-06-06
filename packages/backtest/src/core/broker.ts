@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { floor } from '../utils'
 import { helpers } from '@zapcli/core'
 
@@ -18,6 +19,11 @@ class Broker {
 
   setCash(val: number) {
     this.cash = this.cashStart = val
+  }
+
+  changeCash(val: number) {
+    this.eventHandler?.onCash(this.cash, val)
+    this.cash = val
   }
 
   setCommision(val: number) {
@@ -45,7 +51,8 @@ class Broker {
   }
 
   getValue() {
-    return floor(this.cash + this.getOpenPositions().reduce((acc, p) => acc + (p.units * this.bars[p.symbol][0].close), 0), 2)
+    const positionsValue = this.getOpenPositions().reduce((acc, p) => acc + (p.units * this.bars[p.symbol][0].close), 0)
+    return floor(this.getCash() + positionsValue, 2)
   }
 
   getInvested() {
@@ -57,11 +64,22 @@ class Broker {
   }
 
   getPositions() {
-    return this.positions
+    return this.positions.map(p => {
+      const today = this.bars[p.symbol]?.[0]
+      const closePrice = p.closePrice ?? today?.close ?? 0
+      return {
+        ...p,
+        stats: {
+          pl: floor((closePrice - p.openPrice) * p.units, 2),
+          value: floor(closePrice * p.units, 2),
+          currentPrice: closePrice,
+        }
+      }
+    })
   }
 
   getOpenPositions() {
-    return this.positions.filter(p => !p.closeDate)
+    return this.getPositions().filter(p => !p.closeDate)
   }
 
   closeAllPositions() {
@@ -90,15 +108,15 @@ class Broker {
     const p = this.getOpenPositions().find((p: any) => p.symbol === order.symbol)
 
     if (!p) {
-      return this.cash >= (fillCost + fillCommision)
+      return this.getCash() >= (fillCost + fillCommision)
     } else {
       if (this.sameSide(p, order)) {
-        return this.cash >= (fillCost + fillCommision)
+        return this.getCash() >= (fillCost + fillCommision)
       } else {
         const diffAmmount = (order.units - p.units) * bar.close
 
         if (diffAmmount > 0) {
-          return this.cash >= diffAmmount + (diffAmmount * this.comission)
+          return this.getCash() >= diffAmmount + (diffAmmount * this.comission)
         }
       }
     }
@@ -129,7 +147,9 @@ class Broker {
     if (this.canFill(order, bar)) {
 
       this.eventHandler?.onOrder(data)
-      this.executeOrder(data)
+      const resultPositions = this.executeOrder(data)
+
+      this.positions = this.positions.filter(p => p.closeDate).concat(resultPositions)
 
       return data
     } else {
@@ -149,20 +169,25 @@ class Broker {
   }
 
   executeOrder(order: any) {
-    const p = this.getOpenPositions().find((p: any) => p.symbol === order.symbol)
+    const resultPositions = this.getOpenPositions().map(p => ({ ...p }))
+    const p = resultPositions.find((p: any) => p.symbol === order.symbol)
 
     if (p) {
       if (this.sameSide(p, order)) {
         p.openPrice = (p.openPrice + order.fillPrice) / 2
         p.units += order.fillUnits
 
-        this.cash -= order.fillCost + order.fillCommision
+        this.changeCash(this.getCash() - (order.fillCost + order.fillCommision))
       } else {
         if (floor(p.units, 6) > floor(order.fillUnits, 6)) {
           // Close part of the position
           p.units -= order.fillUnits
-          this.cash += order.fillCost - order.fillCommision
-          this.positions.push(helpers.position.closePosition(p, order))
+
+          const closedPart = helpers.position.closePosition(p, order)
+          resultPositions.push(closedPart)
+
+          this.changeCash(this.getCash() + (order.fillCost - order.fillCommision))
+          this.eventHandler?.onPosition(p)
 
         } else {
           // Close the position
@@ -170,15 +195,15 @@ class Broker {
           p.closePrice = order.fillPrice
           p.closeBar = order.fillBar
 
-          this.cash += order.fillCost - order.fillCommision
+          this.changeCash(this.getCash() + (order.fillCost - order.fillCommision))
 
+          // Open a new position with the remaining units
           const diffAmmount = floor((order.fillUnits - p.units) * order.fillPrice, 2)
-
           if (diffAmmount > 2) {
             const newPosition = { ...helpers.position.openPosition(order), units: order.fillUnits - p.units }
 
-            this.positions.push(newPosition)
-            this.cash -= diffAmmount + (diffAmmount * this.comission)
+            resultPositions.push(newPosition)
+            this.changeCash(this.getCash() - (diffAmmount + (diffAmmount * this.comission)))
             this.eventHandler?.onPosition({ ...newPosition, isNew: true })
           }
 
@@ -188,13 +213,13 @@ class Broker {
       this.eventHandler?.onPosition(p)
     } else {
       const newPosition = helpers.position.openPosition(order)
-      this.positions.push(newPosition)
-      this.cash -= order.fillCost + order.fillCommision
+      resultPositions.push(newPosition)
 
+      this.changeCash(this.getCash() - (order.fillCost + order.fillCommision))
       this.eventHandler?.onPosition({ ...newPosition, isNew: true })
     }
 
-    return this.positions
+    return resultPositions
   }
 }
 

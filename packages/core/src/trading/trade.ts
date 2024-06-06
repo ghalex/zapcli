@@ -52,7 +52,10 @@ const zpTrade = (env) => {
       if (Math.abs(diffAmount) > minDiff) {
         const action = diff > 0 ? 'buy' : 'sell'
         const [diffOrder] = helpers.order.createOrdersUnits([symbol], { [symbol]: 1 }, Math.abs(diff), action, bars)
-        diffOrder.isClose = true
+
+        if (!helpers.order.sameSide(diffOrder, position)) {
+          diffOrder.isClose = true
+        }
 
         return diffOrder
       }
@@ -95,7 +98,10 @@ const zpTrade = (env) => {
         if (Math.abs(diffAmount) > minDiff) {
           const action = diff > 0 ? 'buy' : 'sell'
           const [diffOrder] = helpers.order.createOrdersUnits([symbol], { [symbol]: 1 }, Math.abs(diff), action, bars)
-          diffOrder.isClose = true
+
+          if (!helpers.order.sameSide(diffOrder, pos)) {
+            diffOrder.isClose = true
+          }
 
           resultOrders.push(diffOrder)
         }
@@ -119,7 +125,6 @@ const zpTrade = (env) => {
 
   const closePositions = (value: Position[]) => {
     const positionsToClose = value ?? data.positions
-
     if (positionsToClose.length === 0) { return [] }
 
     const newOrders = helpers.position.generateClosePositions(positionsToClose, bars)
