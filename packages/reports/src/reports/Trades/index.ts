@@ -1,8 +1,9 @@
 import dayjs from 'dayjs'
 import { formatNumber } from '../../utils'
 import dataMap from './mapping'
+import BaseReport from '../Report'
 
-class TradesReport {
+class TradesReport extends BaseReport {
   name = 'trades'
 
   private formatValue(value: any, format: any) {
@@ -26,29 +27,29 @@ class TradesReport {
 
     // Iterate through the key-value pairs in the object
     for (const [key, value] of Object.entries(obj)) {
-        // Create a new row for each key-value pair
-        const row = document.createElement('tr')
+      // Create a new row for each key-value pair
+      const row = document.createElement('tr')
 
-        const label = dataMap[key].label
-        const formattedValue = this.formatValue(value, dataMap[key].format)
+      const label = dataMap[key].label
+      const formattedValue = this.formatValue(value, dataMap[key].format)
 
-        // Create a cell for the key
-        const keyCell = document.createElement('td')
-        keyCell.textContent = label
-        row.appendChild(keyCell)
+      // Create a cell for the key
+      const keyCell = document.createElement('td')
+      keyCell.textContent = label
+      row.appendChild(keyCell)
 
-        // Create a cell for the value
-        const valueCell = document.createElement('td') as any
-        valueCell.textContent = formattedValue
-        row.appendChild(valueCell)
+      // Create a cell for the value
+      const valueCell = document.createElement('td') as any
+      valueCell.textContent = formattedValue
+      row.appendChild(valueCell)
 
-        // Append the row to the table
-        table.appendChild(row)
+      // Append the row to the table
+      table.appendChild(row)
     }
 
     // Return the constructed table
     return table
-}
+  }
 
   render(data: any[]): HTMLElement[] {
     const table = this.createTableFromObject(data)

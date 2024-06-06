@@ -1,7 +1,8 @@
 import TableBuilder from 'table-builder'
 import { formatNumber } from '../utils'
+import BaseReport from './Report'
 
-class PositionsReport {
+class PositionsReport extends BaseReport {
   name = 'returns'
 
   render(data: any[]): HTMLElement[] {

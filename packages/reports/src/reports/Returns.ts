@@ -1,7 +1,8 @@
 import { formatNumber } from '../utils'
 import * as Plot from '@observablehq/plot'
+import BaseReport from './Report'
 
-class RetursReport {
+class RetursReport extends BaseReport {
   name = 'returns'
 
   render(data: any[]): HTMLElement[] {

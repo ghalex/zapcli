@@ -4,16 +4,18 @@ import TradesReport from './reports/Trades'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import DrawDownReport from './reports/DrawDown'
 
 dayjs.extend(duration)
 dayjs.extend(relativeTime)
 
-const renderReport = (name: string, data: any) => {
+const renderReport = (name: string, data: any, options: any) => {
   const reportsByName: Record<string, any> = {}
 
-  reportsByName['returns'] = new RetursReport()
-  reportsByName['positions'] = new PositionsReport()
-  reportsByName['trades'] = new TradesReport()
+  reportsByName['returns'] = new RetursReport(options)
+  reportsByName['positions'] = new PositionsReport(options)
+  reportsByName['trades'] = new TradesReport(options)
+  reportsByName['drawdown'] = new DrawDownReport(options)
 
   if (!reportsByName[name]) {
     console.warn(`Report ${name} not found`)

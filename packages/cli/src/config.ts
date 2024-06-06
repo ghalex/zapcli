@@ -10,7 +10,7 @@ const loadConfig = async (dir?: string) => {
   try {
     const configDir = dir ? path.resolve(currdir, dir) : currdir
 
-    console.log('Loading config file from: ', configDir + '/zp.config.js')
+    // console.log('Loading config file from: ', configDir + '/zp.config.js')
     const config = await import(configDir + '/zp.config.js')
 
     const mainConfig = {
