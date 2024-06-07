@@ -25,9 +25,9 @@ class RetursReport extends BaseReport {
       y: { grid: true, tickFormat: val => formatNumber(val), insetTop: 15, label: "Cash & Value" },
       marks: [
         Plot.frame(),
-        Plot.dot(plotData, { x: "date", y: "value", fill: 'gray', stroke: 'black', tip: true, filter: filterPoints }),
-        Plot.lineY(plotData, { x: "date", y: "value" }),
-        Plot.dot(plotData, { x: "date", y: "cash", fill: 'gray', stroke: 'red', tip: true, filter: filterPoints }),
+        Plot.dot(plotData, { x: "date", y: "value", fill: 'gray', stroke: 'black', filter: filterPoints }),
+        Plot.lineY(plotData, { x: "date", y: "value", tip: true }),
+        Plot.dot(plotData, { x: "date", y: "cash", fill: 'gray', stroke: 'red', filter: filterPoints }),
         Plot.lineY(plotData, { x: "date", y: "cash", stroke: 'red' })
       ]
     }) as HTMLElement
@@ -41,8 +41,8 @@ class RetursReport extends BaseReport {
       y: { grid: true, tickFormat: val => formatNumber(val), label: "P&L" },
       marks: [
         Plot.frame(),
-        Plot.dot(plotData, { x: "date", y: "pl", fill: 'gray', stroke: 'black', tip: true, filter: filterPoints }),
-        Plot.lineY(plotData, { x: "date", y: "pl" })
+        Plot.dot(plotData, { x: "date", y: "pl", fill: 'gray', stroke: 'black', filter: filterPoints }),
+        Plot.lineY(plotData, { x: "date", y: "pl", tip: true })
       ]
     }) as HTMLElement
 
