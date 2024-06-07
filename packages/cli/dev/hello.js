@@ -32,7 +32,8 @@ function run() {
     const ema30 = this.ema(30, position.symbol)
     const close = this.asset(position.symbol).close
 
-    if (close < ema30 && this.getOrder(position.symbol) === null) {
+    // && this.getOrder(position.symbol) === null
+    if (close < ema30) {
       positionsToClose.push(position)
     }
   }

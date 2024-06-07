@@ -10,13 +10,13 @@ class DrawDownAnalyzer extends BaseAnalyzer {
     maxDrawDownDuration: 0,
     maxDrawDownStart: '',
     maxDrawDownEnd: '',
+    longestDrawDownDuration: 0,
     drawDowns: [] as any[]
   }
 
   private value = 0
   private maxValue = 0
   private len = 0
-  private startDate = ''
 
   public init(): boolean {
     return true
@@ -35,33 +35,45 @@ class DrawDownAnalyzer extends BaseAnalyzer {
     item.drawDown = item.moneyDown / this.maxValue
 
     this.len = item.drawDown > 0 ? this.len + 1 : 0
-
     item.len = this.len
 
-    // calculate when the drawdown started
-    if (item.drawDown > 0 && lastItem && lastItem.drawDown === 0) {
-      this.startDate = date
-    }
 
     this.data.maxMoneyDown = Math.max(this.data.maxMoneyDown, item.moneyDown)
     this.data.maxDrawDown = Math.max(this.data.maxDrawDown, item.drawDown)
 
-    if (this.len > this.data.maxDrawDownDuration) {
-      this.data.maxDrawDownStart = this.startDate
-    }
-
-    this.data.maxDrawDownDuration = Math.max(this.data.maxDrawDownDuration, this.len)
+    this.data.longestDrawDownDuration = Math.max(this.data.longestDrawDownDuration, this.len)
     this.data.drawDowns.push(item)
   }
 
   end(): void {
-    const itemIdx = this.data.drawDowns.findIndex(i => i.len === this.data.maxDrawDownDuration)
 
-    if (itemIdx > -1) {
-      let idx = Math.min(itemIdx + 1, this.data.drawDowns.length - 1)
-      this.data.maxDrawDownEnd = this.data.drawDowns[idx].date
+    // calculate start end of max drawdown
+    const itemIdx = this.data.drawDowns.findIndex(i => i.moneyDown === this.data.maxMoneyDown)
+
+    if (itemIdx > 0) {
+      let left = itemIdx
+      let right = itemIdx
+
+      while (left > 0) {
+        if (this.data.drawDowns[left].len === 0) {
+          break
+        }
+        left--
+      }
+
+      while (right < this.data.drawDowns.length - 1) {
+        if (this.data.drawDowns[right].len === 0) {
+          break
+        }
+        right++
+      }
+
+      this.data.maxDrawDownStart = this.data.drawDowns[left]?.date
+      this.data.maxDrawDownEnd = this.data.drawDowns[right]?.date
+      this.data.maxDrawDownDuration = right - left
     }
 
+    // round to 2 decimal places
     this.data.maxDrawDown = round(this.data.maxDrawDown * 100, 2)
   }
 

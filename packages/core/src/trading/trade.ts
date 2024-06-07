@@ -127,7 +127,11 @@ const zpTrade = (env) => {
     const positionsToClose = value ?? data.positions
     if (positionsToClose.length === 0) { return [] }
 
-    const newOrders = helpers.position.generateClosePositions(positionsToClose, bars)
+    const newOrders = helpers.position.generateClosePositions(positionsToClose, bars).filter(o => {
+      const existing = data.orders.find(order => order.symbol === o.symbol && order.action === o.action && order.isClose)
+      return !existing
+    })
+
     data.orders = helpers.order.mergeOrders([...data.orders, ...newOrders])
 
     return data.orders
