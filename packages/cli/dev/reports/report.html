@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+          background-color: #fbfcfe;
+      }
+      figure {
+          margin: 0;
+          padding: 8px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border: 1px solid #e1e1e2;
+          border-radius: 8px;
+      }
+      figure h2 {
+          font-size: 1.5rem;
+          text-align: center;
+          margin-bottom: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="p-8 bg-white shadow">
+      <h1 class="text-4xl mb-1">Backtest Report</h1>
+      <select class="bg-gray-200 p-1 mb-2" id="file-select">
+        <option value="hello-hold.json">hello-hold.json</option>
+        <option value="hello-no-balance.json">hello-no-balance.json</option>
+        <option value="hello.json">hello.json</option>
+      </select>
+      <p class="text-sm"><b class="mr-1">Date generated:</b><span id="date"></span></p>
+      <p class="text-sm"><b class="mr-1">File:</b><span id="file"></span></p>
+      <p class="text-sm"><b class="mr-1">Start Cash:</b><span id="cash1"></span></p>
+      <p class="text-sm"><b class="mr-1">End Cash:</b><span id="cash2"></span></p>
+    </div>
+    <hr>
+    <div class="grid grid-cols-2 p-4 gap-4 container mx-auto" id="container"></div>
+    <script type="importmap">
+      {
+          "imports": {
+              "@observablehq/plot": "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm",
+              "@zapcli/reports": "https://cdn.jsdelivr.net/npm/@zapcli/reports/dist/zapcli-reports.es.js"
+          }
+      }
+    </script>
+    <script type="module">
+      import * as Plot from "@observablehq/plot"
+      import renderReport from "@zapcli/reports"
+      
+      const dataDir = "./data"
+      const dataFiles = ["hello-hold.json","hello-no-balance.json","hello.json"];
+      const container = document.querySelector("#container")
+      const fileSelect = document.querySelector("#file-select")
+      
+      fileSelect.addEventListener("change", () => {
+        const selectedFile = fileSelect.value
+        loadFile(selectedFile)
+      })
+      
+      function loadFile(file) {
+        fetch(dataDir + '/' + file)
+          .then(response => response.json())
+          .then(data => {
+              renderFile(data)
+          })
+          .catch(error => console.error(error))
+      }
+      
+      function renderFile(data) {
+        container.innerHTML = ""
+        const plots = Object.keys(data.analyzers).map(name => renderReport(name, data.analyzers[name])).flat()
+        plots.forEach(plot => {
+          plot.classList.add(..."shadow bg-white".split(" "))
+          container.append(plot)
+        })
+      
+        document.getElementById('file').textContent = data.file;
+        document.getElementById('cash1').textContent = data.startCash;
+        document.getElementById('cash2').textContent = data.endCash;
+        document.getElementById('date').textContent = data.dateGenerated
+      }
+      
+      loadFile(dataFiles[0])
+    </script>
+  </body>
+</html>

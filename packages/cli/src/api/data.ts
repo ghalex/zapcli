@@ -33,13 +33,15 @@ export default (config) => {
     }
 
     try {
+      const params = {
+        symbols: symbols.join(','),
+        window,
+        resolution: resolution ?? 1440,
+        end: end && resolution?.toString() === '1440' ? dayjs(end).endOf('D').toISOString() : end
+      }
+
       const { data } = await axios.get('/bars', {
-        params: {
-          symbols: symbols.join(','),
-          window,
-          resolution: resolution ?? 1440,
-          end: end && resolution?.toString() === '1440' ? dayjs(end).endOf('D').toISOString() : end
-        },
+        params,
         headers: {
           Authorization: `Bearer ${storage.get('accessToken')}`
         }
@@ -55,14 +57,14 @@ export default (config) => {
       }
 
       console.log(`${clc.green('✔ Success:')} All data was saved successfully in ${clc.underline.bold(dataDir)} directory`)
-      
+
       return data
 
     } catch (e: any) {
       spinner.fail()
 
       if (e.response) {
-        if(e.response.status === 401) {
+        if (e.response.status === 401) {
           throw new Error('You must be logged in to download data. Please run `zplang login` command.')
         }
 
@@ -91,7 +93,7 @@ export default (config) => {
 
     for (const s of symbols) {
       const cachedData = await cache(config).get(s, maxWindow, resolution, end)
-      
+
       if (cachedData.length === 0) {
         missing.push(s)
       } else {
@@ -100,7 +102,7 @@ export default (config) => {
     }
 
     if (missing.length > 0) {
-      console.log(`You need to download data for the following symbols: [ ${clc.bold.green(missing.join(', '))} ]`)
+      console.log(`You need to download data (${maxWindow} bars) for the following symbols: [ ${clc.bold.green(missing.join(', '))} ] `)
 
       const response = await prompts({
         type: 'toggle',

@@ -1,5 +1,5 @@
 
-abstract class BaseAnalyzer {
+class BaseAnalyzer {
   name = 'base'
   data: any = {}
   _strategy: any | null = null

@@ -24,7 +24,13 @@ class PositionsAnalyzer extends BaseAnalyzer {
       return
     }
 
-    console.table(this.data)
+    console.table(this.data.map((p) => {
+      const { stats, ...rest } = p
+      return {
+        ...rest,
+        pl: stats.pl.toFixed(2)
+      }
+    }))
   }
 }
 

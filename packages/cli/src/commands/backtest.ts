@@ -42,13 +42,14 @@ export default () => {
         const config = await loadConfig(opts.configDir)
         const extension = path.extname(file)
         const lang = extension === '.js' ? 'js' : 'zp'
+        const backtestsDir = path.join(config.reportsDir ?? 'reports', 'data')
 
         console.log(clc.cyanBright(`→ Backtesting using file: `) + clc.underline(file))
 
         // add defaults
         opts.startDate = opts.startDate ?? config.backtest?.startDate ?? dayjs().endOf('day').subtract(1, 'week').format('YYYY-MM-DD')
         opts.endDate = opts.endDate ?? config.backtest?.endDate ?? dayjs().endOf('day').format('YYYY-MM-DD')
-        opts.save = opts.save ?? config.backtest?.saveResult
+        opts.save = opts.save ?? path.basename(file, extension) + '.json'
         opts.market = opts.market ?? config.backtest?.market ?? 'stocks'
 
         // console.log(config.backtest)
@@ -62,12 +63,16 @@ export default () => {
 
         //strategy.addAnalyzer(new LoggerAnalyzer())
         const availableAnalyzers = Object.values(analyzers).reduce((result, AnalyzerClass) => {
-          try {
-            const analyzer = new AnalyzerClass()
-            result[analyzer.name] = analyzer
+          if (AnalyzerClass.prototype instanceof analyzers.BaseAnalyzer) {
             return result
-          } catch (e) {
-            return result
+          } else {
+            try {
+              const analyzer = new AnalyzerClass()
+              result[analyzer.name] = analyzer
+              return result
+            } catch (e) {
+              return result
+            }
           }
         }, {} as any)
 
@@ -136,16 +141,20 @@ export default () => {
           console.log('')
         }
 
-        if (opts.save) {
-          const filePath = path.join(process.cwd(), opts.save)
-          console.log(clc.cyanBright(`→ Saving result to file: `) + clc.underline(filePath))
-
-          result.file = file
-          result.dateGenerated = new Date().toISOString()
-
-          fs.writeFileSync(filePath, JSON.stringify(result, null, 2))
-          console.log(`${clc.green('✔ Success:')} Result saved successfully\n`)
+        // if (opts.save) {
+        if (!fs.existsSync(backtestsDir)) {
+          fs.mkdirSync(backtestsDir, { recursive: true })
         }
+
+        const filePath = path.join(process.cwd(), backtestsDir, opts.save)
+        console.log(clc.cyanBright(`→ Saving result to file: `) + clc.underline(filePath))
+
+        result.file = file
+        result.dateGenerated = new Date().toISOString()
+
+        fs.writeFileSync(filePath, JSON.stringify(result, null, 2))
+        console.log(`${clc.green('✔ Success:')} Result saved successfully\n`)
+        // }
 
       } catch (e: any) {
         console.error(clc.red(`Error: ${e.message}`))

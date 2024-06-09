@@ -1,6 +1,6 @@
 {
   "name": "@zapcli/reports",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/zapcli-reports.cjs.js",
   "module": "dist/zapcli-reports.es.js",

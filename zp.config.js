@@ -88,7 +88,8 @@ const samplePositions = [
 
 const config = {
   dataDir: "./dev/data",
-  apiUrl: "http://zapant.com/api",
+  reportsDir: "./dev/reports",
+  dataProvider: "zapant", // async (params) => [{...}]
   execute: {
     date: "2024-04-01",
     inputs: {
@@ -98,9 +99,8 @@ const config = {
     },
   },
   backtest: {
-    startDate: "2023-01-01",
+    startDate: "2024-01-01",
     endDate: "2024-06-01",
-    saveResult: "./dev/report/data.json",
     market: "crypto",
     inputs: {
       assets: []

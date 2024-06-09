@@ -1,6 +1,6 @@
 {
   "name": "@zapcli/backtest",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/zapcli-backtest.cjs.js",
   "module": "dist/zapcli-backtest.es.js",

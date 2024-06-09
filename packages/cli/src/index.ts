@@ -9,6 +9,7 @@ import login from './commands/login'
 import download from './commands/download'
 import backtest from './commands/backtest'
 import view from './commands/view'
+import report from './commands/report'
 
 figlet("- ZapCli -", async (err, data) => {
 
@@ -27,6 +28,7 @@ figlet("- ZapCli -", async (err, data) => {
   program.addCommand(download())
   program.addCommand(backtest())
   program.addCommand(view())
+  program.addCommand(report())
 
   return program.parse(process.argv)
 

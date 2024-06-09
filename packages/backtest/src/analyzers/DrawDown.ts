@@ -24,7 +24,6 @@ class DrawDownAnalyzer extends BaseAnalyzer {
 
   next() {
     const date = dayjs(this.strategy.currentDate).format('YYYY-MM-DD')
-    const lastItem = this.data.drawDowns.length > 1 ? this.data.drawDowns[this.data.drawDowns.length - 1] : null
     const item: any = { date }
 
     this.value = this.strategy.broker.getValue()

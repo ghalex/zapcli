@@ -26,7 +26,7 @@ class TreadesAnalyzer extends BaseAnalyzer {
       this.data.nbOfTrades += 1
       const profit = (position.closePrice - position.openPrice) * position.units
 
-     // Calculate nr of winning and losing trades
+      // Calculate nr of winning and losing trades
       if (profit > 0) {
         this.data.nbOfWinningTrades++
         totalWin += profit
@@ -36,26 +36,26 @@ class TreadesAnalyzer extends BaseAnalyzer {
       }
 
       // Calculate best and worst trade
-      if(!this.data.bestTrade || profit > this.data.bestTrade) {
+      if (!this.data.bestTrade || profit > this.data.bestTrade) {
         this.data.bestTrade = profit
       }
-      if(!this.data.worstTrade || profit < this.data.worstTrade) {
+      if (!this.data.worstTrade || profit < this.data.worstTrade) {
         this.data.worstTrade = profit
       }
 
       // Calculate trade duration
       const tradeDuration = (position.closeDate - position.openDate) / 1000 // Convert to seconds
       totalTradesDuration += tradeDuration
-      if(tradeDuration > this.data.maxTradeDuration) {
+      if (tradeDuration > this.data.maxTradeDuration) {
         this.data.maxTradeDuration = tradeDuration
       }
     }
 
     // Calculate average win and loss
-    if(totalWin) {
+    if (totalWin) {
       this.data.avgWinningTrade = round(totalWin / this.data.nbOfWinningTrades, 2)
     }
-    if(totalLoss) {
+    if (totalLoss) {
       this.data.avgLosingTrade = round(totalLoss / this.data.nbOfLosingTrades, 2)
     }
 
