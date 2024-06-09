@@ -42,7 +42,7 @@ export default () => {
         const config = await loadConfig(opts.configDir)
         const extension = path.extname(file)
         const lang = extension === '.js' ? 'js' : 'zp'
-        const backtestsDir = path.join(config.reportsDir ?? 'reports', 'data')
+        const backtestsDir = config.backtestsDir ?? 'backtests'
 
         console.log(clc.cyanBright(`→ Backtesting using file: `) + clc.underline(file))
 

@@ -1,3 +1,4 @@
+import * as path from 'node:path'
 import { analyzers } from '@zapcli/backtest'
 import dayjs from 'dayjs'
 
@@ -89,6 +90,7 @@ const samplePositions = [
 const config = {
   dataDir: "./dev/data",
   reportsDir: "./dev/reports",
+  backtestsDir: "./dev/backtests",
   dataProvider: "zapant", // async (params) => [{...}]
   execute: {
     date: "2024-04-01",
@@ -112,6 +114,8 @@ const config = {
       new analyzers.PositionsAnalyzer(),
       // new LogAnalyzer(),
     ]
+  },
+  report: {
   }
 }
 

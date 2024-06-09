@@ -28,7 +28,6 @@
       <h1 class="text-4xl mb-1">Backtest Report</h1>
       <select class="bg-gray-200 p-1 mb-2" id="file-select">
         <option value="hello-hold.json">hello-hold.json</option>
-        <option value="hello-no-balance.json">hello-no-balance.json</option>
         <option value="hello.json">hello.json</option>
       </select>
       <p class="text-sm"><b class="mr-1">Date generated:</b><span id="date"></span></p>
@@ -50,8 +49,8 @@
       import * as Plot from "@observablehq/plot"
       import renderReport from "@zapcli/reports"
       
-      const dataDir = "./data"
-      const dataFiles = ["hello-hold.json","hello-no-balance.json","hello.json"];
+      const dataDir = "../backtests"
+      const dataFiles = ["hello-hold.json","hello.json"];
       const container = document.querySelector("#container")
       const fileSelect = document.querySelector("#file-select")
       

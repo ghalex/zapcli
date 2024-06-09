@@ -101,6 +101,10 @@ export default (config: any) => {
   const reportsDir = config.reportsDir ?? "reports"
 
   function getJsonFiles(directory) {
+    if (!fs.existsSync(directory)) {
+      return []
+    }
+
     // Read all files in the directory
     const files = fs.readdirSync(directory);
 
@@ -108,10 +112,9 @@ export default (config: any) => {
     return files.filter(file => path.extname(file).toLowerCase() === '.json');
   }
 
-  const generateReport = (name: string) => {
+  const generateReport = (name: string, files: string[], dir: string) => {
     const renderFn = pug.compile(template, { pretty: true })
-    const files = getJsonFiles(path.join(process.cwd(), reportsDir, 'data'))
-    const html = renderFn({ files, dataDir: './data' })
+    const html = renderFn({ files, dataDir: path.relative(reportsDir, dir) })
 
     if (!fs.existsSync(reportsDir)) {
       fs.mkdirSync(reportsDir, { recursive: true })
@@ -123,5 +126,5 @@ export default (config: any) => {
     return filePath
   }
 
-  return { generateReport }
+  return { generateReport, getJsonFiles }
 }
