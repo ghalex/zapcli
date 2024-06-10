@@ -3,7 +3,8 @@
 
 (def symbols [
   "AAPL",
-  "MSFT"
+  "MSFT",
+  "TSLA"
 ])
 
 

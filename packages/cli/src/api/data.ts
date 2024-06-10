@@ -16,19 +16,15 @@ export default (config) => {
   })
 
   /**
-   * Download bars
+   * Download bars uzing zapant provider
    * @param symbols 
    * @param window 
    * @param resolution 
    * @param end 
    * @returns 
    */
-  const download = async (symbols: string[], window: number, resolution?: number, end?: string) => {
-    const dataDir = config.dataDir
-    const spinner = ora(`Downloading data for [ ${clc.bold.green(symbols.join(', '))} ]`).start()
-
+  const downloadZapant = async (symbols: string[], window: number, resolution?: number, end?: string) => {
     if (!storage.get('accessToken')) {
-      spinner.fail()
       throw new Error('You must be logged in to download data. Please run `zplang login` command.')
     }
 
@@ -47,22 +43,10 @@ export default (config) => {
         }
       })
 
-      spinner.succeed()
-      console.log(`${clc.green('✔ Success:')} Data was downloaded successfully`)
-
-      for (const symbol of symbols) {
-        if (data[symbol] && data[symbol].length > 0) {
-          await cache(config).save(symbol, resolution ?? 1440, data[symbol])
-        }
-      }
-
-      console.log(`${clc.green('✔ Success:')} All data was saved successfully in ${clc.underline.bold(dataDir)} directory`)
-
+      // console.log(`${clc.green('✔ Success:')} Data was downloaded successfully`)
       return data
 
     } catch (e: any) {
-      spinner.fail()
-
       if (e.response) {
         if (e.response.status === 401) {
           throw new Error('You must be logged in to download data. Please run `zplang login` command.')
@@ -75,7 +59,17 @@ export default (config) => {
         throw new Error(e.message)
       }
     }
+  }
 
+  const download = async (provider: string, symbols: string[], window: number, resolution?: number, end?: string) => {
+    switch (provider) {
+      case 'zapant':
+        return downloadZapant(symbols, window, resolution, end)
+      case 'yahoo':
+        throw new Error('Yahoo provider is not implemented yet')
+      default:
+        throw new Error('Invalid provider')
+    }
   }
 
   /**
@@ -89,6 +83,7 @@ export default (config) => {
    */
   const downloadBars = async (symbols: string[], maxWindow: number, resolution?: number, end?: string) => {
     let bars = {}
+    const dataDir = config.dataDir
     const missing: string[] = []
 
     for (const s of symbols) {
@@ -114,9 +109,43 @@ export default (config) => {
       })
 
       if (response.value) {
-        const data = await download(missing, maxWindow, resolution, end)
-        bars = { ...bars, ...data }
+        const provider = await prompts({
+          type: 'select',
+          name: 'value',
+          message: 'Select data provider',
+          choices: [
+            { title: 'Zapant', value: 'zapant' },
+            { title: 'Yahoo', value: 'yahoo' }
+          ]
+        })
+
+        const spinner = ora(`Downloading data for [ ${clc.bold.green(missing.join(', '))} ]`)
+        spinner.start()
+
+        try {
+          const data = await download(provider.value, missing, maxWindow, resolution, end)
+          spinner.succeed()
+
+          // Save data to cache
+          for (const symbol of symbols) {
+            if (data[symbol] && data[symbol].length > 0) {
+              await cache(config).save(symbol, resolution ?? 1440, data[symbol])
+            }
+          }
+
+          console.log(`${clc.green('✔ Success:')} All data was saved successfully in ${clc.underline.bold(dataDir)} directory`)
+
+          bars = { ...bars, ...data }
+        } catch (e: any) {
+          spinner.fail()
+          console.error(clc.red(`✖ Error: ${e.message}`))
+        }
+      } else {
+        console.log(`${clc.green('✔ Success:')} Data was not downloaded`)
       }
+
+    } else {
+      console.log(`${clc.green('✔ Success:')} All data is already in cache`)
     }
 
     return bars

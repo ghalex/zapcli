@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import calendar from '@zapant/calendar'
 
 export default (config) => {
-  
+
   /**
    * Parse symbol
    * @param symbol 
@@ -15,21 +15,21 @@ export default (config) => {
   const parseSymbol = (symbol: string) => {
     return symbol.replace(/\//g, '_')
   }
-  
+
   const getAll = (symbol: string, resolution?: number) => {
     const dataDir = config.dataDir
     const key = `${parseSymbol(symbol)}_${resolution ?? 1440}`
     const filePath = path.join(dataDir, key + '.data')
-  
+
     if (!fs.existsSync(filePath)) {
       return []
     }
-  
+
     try {
       const fileContents = fs.readFileSync(filePath)
       const buffer = gunzipSync(fileContents)
-  
-      
+
+
       const data = JSON.parse(buffer.toString('utf8'))
       return data
     } catch (err: any) {
@@ -72,9 +72,9 @@ export default (config) => {
     }
 
     if (index === 0) {
-     if (!fromDate.isSame(dayjs(data[0].date), resolutionMap[resolution])) {
-      return []
-     }
+      if (!fromDate.isSame(dayjs(data[0].date), resolutionMap[resolution])) {
+        return []
+      }
     }
 
     if (index < 0) {
@@ -87,7 +87,7 @@ export default (config) => {
 
     return data.slice(0, window)
   }
-  
+
   const canCombine = (oldData: any, newData: any) => {
     // Find the date range of oldData
     const oldDataDates = oldData.map(item => item.date)
@@ -102,14 +102,12 @@ export default (config) => {
     if (oldMaxDate < newMinDate || newMaxDate < oldMinDate) {
       return false
     }
-    
+
     return true
   }
 
   const combineData = (oldData: any, newData: any) => {
     if (!canCombine(oldData, newData)) return newData
-
-    console.log('data can be combined')
     const dataMap = new Map<number, any>()
 
     // Add all entries from oldData to the map
@@ -144,23 +142,23 @@ export default (config) => {
     const filePath = path.join(dataDir, key + '.data')
     const jsonString = JSON.stringify(data, null, 2)
     const buffer = Buffer.from(jsonString, 'utf8')
-  
+
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true })
     }
-  
+
     try {
       const compressedBuffer = gzipSync(buffer)
       fs.writeFileSync(filePath, compressedBuffer)
-  
+
       const size = compressedBuffer.length;
       const kiloBytes = size / 1024;
       console.log(`→ Data for ${clc.bold.green(symbol)} symbol was saved successfully ${clc.green(`(${kiloBytes.toFixed(2)} KB)`)}`);
-  
+
       return filePath;
     } catch (err: any) {
-        console.error(`Error writing compressed data to ${filePath}: ${err.message}`);
-        throw err;
+      console.error(`Error writing compressed data to ${filePath}: ${err.message}`);
+      throw err;
     }
   }
 

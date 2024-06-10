@@ -21,7 +21,7 @@ export default () => {
         const symbols = opts.symbols.split(',')
         const end = opts.end ? new Date(opts.end).toISOString() : undefined
 
-        await data(config).download(symbols, window, resolution, end)
+        await data(config).downloadBars(symbols, window, resolution, end)
         // const d = cache(config).get("TSLA", 5, 1440, "2024-05-14")
         // console.log(d)
       } catch (e: any) {
