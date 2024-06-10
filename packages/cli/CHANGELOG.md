@@ -1,5 +1,11 @@
 # @zapcli/cli
 
+## 1.0.5
+
+### Patch Changes
+
+- add ability to select data provider
+
 ## 1.0.4
 
 ### Patch Changes
