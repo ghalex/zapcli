@@ -6,9 +6,9 @@
 </p>
 
 <h1 align="center">ZapCli</h1>
-<h3 align="center">The quickest way to test and improve your trading strategies!</h3>
+<h3 align="center">The quickest way to write trading automations!</h3>
 <p align="center">
-<b>ZapCli</b> is an open-source algorithmic trading engine that simplifies the process of backtesting your trading strategies.
+<b>ZapCli</b> is an open-source automation trading engine. That main focus is to simplifies the process of<b>writing trading automations.</b>
 </p>
 
 <p align="center">
