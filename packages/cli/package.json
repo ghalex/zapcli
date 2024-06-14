@@ -1,6 +1,6 @@
 {
   "name": "@zapcli/cli",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A CLI tool for backtesting and trading",
   "main": "dist/zapcli.es.mjs",
   "module": "dist/zapcli.es.mjs",

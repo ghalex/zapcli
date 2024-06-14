@@ -36,6 +36,7 @@ export default () => {
     .option('-v, --verbose', 'verbose mode', false)
     .option('-a, --analyzers <analyzers...>', 'analyzers to use')
     .option('-c, --configDir <configDir>', 'config directory')
+    .option('-a, --auto', 'don\'t prompt confirmation prompts')
     .action(async (file, opts) => {
 
       try {
@@ -62,7 +63,7 @@ export default () => {
         const strategy = new Strategy({ code, lang, verbose: opts.verbose, inputs: config.backtest?.inputs ?? {} })
 
         //strategy.addAnalyzer(new LoggerAnalyzer())
-        const availableAnalyzers = Object.values(analyzers).reduce((result, AnalyzerClass) => {
+        const availableAnalyzers: any = Object.values(analyzers).reduce((result: any, AnalyzerClass: any) => {
           if (AnalyzerClass.prototype instanceof analyzers.BaseAnalyzer) {
             return result
           } else {
@@ -88,7 +89,7 @@ export default () => {
         console.log('')
 
         const { symbols, maxWindow, settings } = api.code().getSymbols(code, lang, [], config.backtest?.inputs ?? {})
-        const bars: Record<string, any[]> = await api.data(config).downloadBars(symbols, maxWindow + window, settings.timeframe ?? 1440, opts.endDate)
+        const bars: Record<string, any[]> = await api.data(config).downloadBars(symbols, maxWindow + window, settings.timeframe ?? 1440, opts.endDate, opts.auto)
 
         // 2. Run backtest
         const allDatas: any[] = Object.values(bars)
