@@ -36,7 +36,7 @@ export default () => {
     .option('-v, --verbose', 'verbose mode', false)
     .option('-a, --analyzers <analyzers...>', 'analyzers to use')
     .option('-c, --configDir <configDir>', 'config directory')
-    .option('-a, --auto', 'don\'t prompt confirmation prompts')
+    // .option('-a, --auto', 'don\'t prompt confirmation prompts')
     .action(async (file, opts) => {
 
       try {
@@ -89,7 +89,7 @@ export default () => {
         console.log('')
 
         const { symbols, maxWindow, settings } = api.code().getSymbols(code, lang, [], config.backtest?.inputs ?? {})
-        const bars: Record<string, any[]> = await api.data(config).downloadBars(symbols, maxWindow + window, settings.timeframe ?? 1440, opts.endDate, opts.auto)
+        const bars: Record<string, any[]> = await api.data(config).downloadBars(symbols, maxWindow + window, settings.timeframe ?? 1440, opts.endDate)
 
         // 2. Run backtest
         const allDatas: any[] = Object.values(bars)
