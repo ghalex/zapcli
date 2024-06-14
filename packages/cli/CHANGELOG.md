@@ -1,5 +1,11 @@
 # @zapcli/cli
 
+## 1.0.9
+
+### Patch Changes
+
+- ability to login user params
+
 ## 1.0.7
 
 ### Patch Changes
