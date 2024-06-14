@@ -19,6 +19,7 @@ export default () => {
     .option('-r, --result <result>', 'result output file')
     .option('-e, --errors', 'debug errors')
     .option('-c, --configDir <configDir>', 'config directory')
+    .option('-a, --auto', 'don\'t prompt confirmation prompts')
     .action(async (file, opts) => {
 
       try {
@@ -32,7 +33,7 @@ export default () => {
 
         opts.date = opts.date ?? config.execute?.date ?? dayjs().endOf('day').format('YYYY-MM-DD')
 
-        const bars = await api.data(config).downloadBars(requirements.symbols, requirements.maxWindow, requirements?.settings?.timeframe ?? 1440, opts.date)
+        const bars = await api.data(config).downloadBars(requirements.symbols, requirements.maxWindow, requirements?.settings?.timeframe ?? 1440, opts.date, opts.auto)
         let result = api.code().runCode(code, lang, bars, config.execute?.inputs ?? {})
 
         console.log(`${clc.green('✔ Success:')} Code was executed successfully`)

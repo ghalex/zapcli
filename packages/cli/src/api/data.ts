@@ -81,7 +81,7 @@ export default (config) => {
    * @param end 
    * @returns 
    */
-  const downloadBars = async (symbols: string[], maxWindow: number, resolution?: number, end?: string) => {
+  const downloadBars = async (symbols: string[], maxWindow: number, resolution?: number, end?: string, auto?: boolean) => {
     let bars = {}
     const dataDir = config.dataDir
     const missing: string[] = []
@@ -99,7 +99,7 @@ export default (config) => {
     if (missing.length > 0) {
       console.log(`You need to download data (${maxWindow} bars) for the following symbols: [ ${clc.bold.green(missing.join(', '))} ] `)
 
-      const response = await prompts({
+      const response = auto ? { value: true } : await prompts({
         type: 'toggle',
         name: 'value',
         message: 'Do you want to download the missing data?',
@@ -109,7 +109,7 @@ export default (config) => {
       })
 
       if (response.value) {
-        const provider = await prompts({
+        const provider = auto ? {value: config.dataProvider} : await prompts({
           type: 'select',
           name: 'value',
           message: 'Select data provider',

@@ -97,7 +97,7 @@ const config = {
     inputs: {
       assets: [],
       initialCapital: 10000,
-      openPositions: samplePositions
+      openPositions: [] // samplePositions
     },
   },
   backtest: {

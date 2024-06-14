@@ -56,8 +56,8 @@ export default () => {
     const inSeconds = (stop - start) / 1000
 
     return {
-      orders: [],
-      result: {},
+      orders: env.getOrders(),
+      result: result ?? {},
       stdout: env.stdout.join('\n'),
       time: inSeconds
     }

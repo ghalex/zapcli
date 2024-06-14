@@ -13,16 +13,22 @@ function run() {
   //   this.sell(this.asset(symbol), 1)
   // }
 
-  if (this.barIndex % 5 === 0) {
-    this.closePositions()
-  } else {
+  //if (this.barIndex % 5 === 0) {
+  //  this.closePositions()
+  //} else {
     //this.asset("MSFT")
     //this.print("SMA:", this.sma(10, "AAPL"))
 
     for (const symbol of assets) {
       this.buy(this.asset(symbol), 1)
     }
-  }
+
+    this.print(this.getOrders())
+  //}
+
+    return {
+      name: "Test"
+    }
 
 }
 
