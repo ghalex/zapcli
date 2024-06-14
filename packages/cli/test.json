@@ -25,5 +25,5 @@
     "name": "Test"
   },
   "stdout": "[\n  {\n    \"symbol\": \"AAPL\",\n    \"date\": 1711944000000,\n    \"dateFormatted\": \"2024-04-01T04:00:00.000Z\",\n    \"price\": 170.03,\n    \"units\": 1,\n    \"action\": \"buy\",\n    \"status\": \"created\",\n    \"value\": 170.03\n  },\n  {\n    \"symbol\": \"MSFT\",\n    \"date\": 1711944000000,\n    \"dateFormatted\": \"2024-04-01T04:00:00.000Z\",\n    \"price\": 424.57,\n    \"units\": 1,\n    \"action\": \"buy\",\n    \"status\": \"created\",\n    \"value\": 424.57\n  }\n]",
-  "time": 0.0017627290000000358
+  "time": 0.001704163000000335
 }

@@ -84,16 +84,21 @@ export default (config) => {
   const downloadBars = async (symbols: string[], maxWindow: number, resolution?: number, end?: string, auto?: boolean) => {
     let bars = {}
     const dataDir = config.dataDir
-    const missing: string[] = []
+    let missing: string[] = []
 
-    for (const s of symbols) {
-      const cachedData = await cache(config).get(s, maxWindow, resolution, end)
+    // if end is undefined always fetch latest price
+    if (end) {
+      for (const s of symbols) {
+        const cachedData = await cache(config).get(s, maxWindow, resolution, end)
 
-      if (cachedData.length === 0) {
-        missing.push(s)
-      } else {
-        bars[s] = cachedData
+        if (cachedData.length === 0) {
+          missing.push(s)
+        } else {
+          bars[s] = cachedData
+        }
       }
+    } else {
+      missing = [...symbols]
     }
 
     if (missing.length > 0) {

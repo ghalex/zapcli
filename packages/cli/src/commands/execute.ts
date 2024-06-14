@@ -31,7 +31,7 @@ export default () => {
         const code = api.code().readCode(file)
         const requirements = api.code().getSymbols(code, lang, config.execute?.inputs?.openPositions ?? [], config.execute?.inputs ?? {})
 
-        opts.date = opts.date ?? config.execute?.date ?? dayjs().endOf('day').format('YYYY-MM-DD')
+        opts.date = opts.date ?? config.execute?.date ?? undefined // dayjs().endOf('day').format('YYYY-MM-DD')
 
         const bars = await api.data(config).downloadBars(requirements.symbols, requirements.maxWindow, requirements?.settings?.timeframe ?? 1440, opts.date, opts.auto)
         let result = api.code().runCode(code, lang, bars, config.execute?.inputs ?? {})

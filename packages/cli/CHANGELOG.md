@@ -1,5 +1,11 @@
 # @zapcli/cli
 
+## 1.0.10
+
+### Patch Changes
+
+- feth latests data in end is undefined
+
 ## 1.0.9
 
 ### Patch Changes
