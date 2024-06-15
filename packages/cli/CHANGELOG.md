@@ -1,5 +1,11 @@
 # @zapcli/cli
 
+## 1.0.12
+
+### Patch Changes
+
+- add ability to select template when create a project
+
 ## 1.0.11
 
 ### Patch Changes

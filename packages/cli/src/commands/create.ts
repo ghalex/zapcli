@@ -10,11 +10,11 @@ import voca from 'voca'
 
 const program = new Command('create')
 
-const createProject = async (name: string) => {
-  const spinner = ora(`Creating project ${clc.bold.cyanBright(name)}`).start()
-  const res = shell.exec(`git clone https://github.com/zapant-com/zplang-hello.git ${name}`, { silent: true })
+const createProject = async (name: string, projectDir: string) => {
+  const spinner = ora(`Creating project ${clc.bold.cyanBright(name)} in ${clc.underline(path.join(process.cwd(), projectDir))}`).start()
+  const res = shell.exec(`git clone https://github.com/zapant-com/zplang-hello.git ${projectDir}`, { silent: true })
   if (res.code === 0) {
-    shell.rm('-rf', name + '/.git')
+    shell.rm('-rf', projectDir + '/.git')
 
     spinner.succeed()
     console.log(`${clc.green('✔ Success: ')} Project ${clc.bold.cyanBright(name)} created successfully`)
@@ -29,13 +29,13 @@ const createProject = async (name: string) => {
   }
 }
 
-const createEmptyProject = async (name: string, filesIndex?: number) => {
+const createEmptyProject = async (name: string, projectDir: string, filesIndex?: number) => {
   const files = [
     {
       name: 'package.json',
       content: `
 {
-  "name": "zapcli-project",
+  "name": "${name}",
   "version": "1.0.0",
   "description": "zapcli project",
   "type": "module",
@@ -89,11 +89,11 @@ export default config;
     },
   ]
 
-  const spinner = ora(`Creating project ${clc.bold.cyanBright(name)}`).start()
-  await fse.ensureDir(name)
+  const spinner = ora(`Creating project ${clc.bold.cyanBright(name)} in ${clc.underline(path.join(process.cwd(), projectDir))}`).start()
+  await fse.ensureDir(projectDir)
 
   files.slice(0, filesIndex).forEach(async (file) => {
-    const filePath = path.join(name, file.name);
+    const filePath = path.join(projectDir, file.name);
     await fse.outputFile(filePath, voca.trim(file.content));
   })
 
@@ -103,8 +103,8 @@ export default config;
   return true
 }
 
-const installDependencies = async (projectName:string, pkName: string) => {
-  shell.cd(projectName)
+const installDependencies = async (projectDir:string, pkName: string) => {
+  shell.cd(projectDir)
   const spinner = ora(`Installing dependencies`).start()
   const res = shell.exec(`${pkName} install`, { silent: true })
 
@@ -124,12 +124,14 @@ export default () => {
     .argument('[name]', 'project name')
     .option('-t, --template <template>', 'template to use for creating the project')
     .option('-pk, --pkManager <pkManager>', 'package manager')
+    .option('-d, --dir <dir>', 'dir to create project')
     .option('--no-install', 'don\'t install dependencies')
     .action(async (projectName, opts) => {
         const { name } = projectName ? { name: projectName } : await prompts({ type: 'text', name: 'name', message: 'Enter project name', initial: projectName })
+        const projectDir = opts.dir ?? name
 
-        if (fs.existsSync(name)) {
-          console.log(`${clc.red('✖ Error: ')} Path ${name} already exists and is not an empty directory`)
+        if (fs.existsSync(projectDir)) {
+          console.log(`${clc.red('✖ Error: ')} Path ${projectDir} already exists and is not an empty directory`)
           return
         }
 
@@ -172,15 +174,15 @@ export default () => {
         let res: boolean | null = null
         switch (template) {
           case 'empty':
-            res = await createEmptyProject(name, 1)
+            res = await createEmptyProject(name, projectDir, 1)
             break;
 
           case 'simple':
-            res = await createEmptyProject(name)
+            res = await createEmptyProject(name, projectDir)
             break;
 
           case 'with-samples':
-            res = await createProject(name)
+            res = await createProject(name, projectDir)
             break
 
           default:
@@ -193,7 +195,7 @@ export default () => {
         }
 
         if (packageManager) {
-          await installDependencies(name, packageManager)
+          await installDependencies(projectDir, packageManager)
         }
 
     })
