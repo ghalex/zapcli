@@ -1,0 +1,13 @@
+{
+  "name": "zapcli-project",
+  "version": "1.0.0",
+  "description": "zapcli project",
+  "type": "module",
+  "scripts": {
+    "execute": "zapcli execute ./automation.zp",
+    "backtest": "zapcli backtest ./automation.zp",
+    "version": "zapcli -v"
+  },
+  "license": "ISC",
+  "dependencies": {}
+}
