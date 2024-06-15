@@ -1,4 +1,4 @@
-const assets = ["ETH/USD"]
+const assets = ["AAPL", "MSFT"]
 const window = 1
 const settings = {}
 

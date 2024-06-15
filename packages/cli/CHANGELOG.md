@@ -1,5 +1,11 @@
 # @zapcli/cli
 
+## 1.0.11
+
+### Patch Changes
+
+- add option to store error in a file
+
 ## 1.0.10
 
 ### Patch Changes

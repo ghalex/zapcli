@@ -22,13 +22,23 @@ export default () => {
     zpEnv.call('setCash', inputs.initialCapital ?? 10_000)
     zpEnv.call('setPositions', inputs.openPositions ?? [])
 
-    const result = evalCode(zpEnv, code)
+    let result = {}
+    let error = null
+
+    try {
+      console.log('before eval')
+      result = evalCode(zpEnv, code)
+    } catch (err: any) {
+      error = err.message
+    }
+
     const stop = performance.now()
     const inSeconds = (stop - start) / 1000
 
     return {
       orders: zpEnv.call('getOrders'),
       result,
+      error,
       stdout: zpEnv.stdout,
       time: inSeconds
     }
@@ -82,7 +92,7 @@ export default () => {
    * @param openPositions 
    * @returns 
    */
-  const getZpSymbols = (code: string, openPositions: any = [], inputs: any = {}) => {
+  const getZpRequirements = (code: string, openPositions: any = [], inputs: any = {}) => {
     const metaEnv = new Env({ isMeta: true })
     metaEnv.bind('barIndex', 1)
     metaEnv.bind('date', new Date())
@@ -92,6 +102,7 @@ export default () => {
     // Set positions
     metaEnv.call('setPositions', [...openPositions])
 
+    // try {
     evalCode(metaEnv, code)
 
     const settings = metaEnv.getPragma()
@@ -102,11 +113,15 @@ export default () => {
     const maxWindow = maxAssets.length > 0 ? Math.max(...maxAssets) : 1
 
     return { symbols, maxWindow, settings }
+    // } catch (err: any) {
+    //   throw new Error('Requirements error, cannot eval meta env.')
+    // }
   }
 
-  function getJsSymbols(code: string, openPositions: any = [], inputs: any = {}) {
+  function getJsRequirements(code: string, openPositions: any = [], inputs: any = {}) {
     const execFunc = new Function(code)
     const res = execFunc()
+
     const symbols = uniq([
       ...uniq([...res.assets, ...inputs.assets]),
       ...openPositions.map(p => p.symbol),
@@ -116,13 +131,13 @@ export default () => {
     return { symbols, maxWindow: res.window ?? 1, settings: res.settings ?? {} }
   }
 
-  const getSymbols = (code: string, lang: string, openPositions: any, inputs: any = {}) => {
+  const getRequirements = (code: string, lang: string, openPositions: any, inputs: any = {}) => {
     switch (lang) {
       case 'js':
-        return getJsSymbols(code, openPositions, inputs)
+        return getJsRequirements(code, openPositions, inputs)
 
       case 'zp':
-        return getZpSymbols(code, openPositions, inputs)
+        return getZpRequirements(code, openPositions, inputs)
 
       default:
         throw new Error('Invalid file extension. It should be .js or .zp')
@@ -144,5 +159,5 @@ export default () => {
     return fs.readFileSync(filePath, 'utf8')
   }
 
-  return { runCode, getSymbols, readCode }
+  return { runCode, getRequirements, readCode }
 }

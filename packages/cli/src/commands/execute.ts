@@ -17,7 +17,7 @@ export default () => {
     .option('-d, --date <date>', 'date to execute the file')
     .option('-o, --orders <orders>', 'orders output file')
     .option('-r, --result <result>', 'result output file')
-    .option('-e, --errors', 'debug errors')
+    .option('-e, --errors <errors>', 'errors output file')
     .option('-c, --configDir <configDir>', 'config directory')
     .option('-a, --auto', 'don\'t prompt confirmation prompts')
     .action(async (file, opts) => {
@@ -29,10 +29,11 @@ export default () => {
         const extension = path.extname(file)
         const lang = extension === '.js' ? 'js' : 'zp'
         const code = api.code().readCode(file)
-        const requirements = api.code().getSymbols(code, lang, config.execute?.inputs?.openPositions ?? [], config.execute?.inputs ?? {})
+        const requirements = api.code().getRequirements(code, lang, config.execute?.inputs?.openPositions ?? [], config.execute?.inputs ?? {})
 
         opts.date = opts.date ?? config.execute?.date ?? undefined // dayjs().endOf('day').format('YYYY-MM-DD')
-
+        opts.errors = opts.errors ?? config.execute?.errors ?? undefined
+        
         const bars = await api.data(config).downloadBars(requirements.symbols, requirements.maxWindow, requirements?.settings?.timeframe ?? 1440, opts.date, opts.auto)
         let result = api.code().runCode(code, lang, bars, config.execute?.inputs ?? {})
 
@@ -61,11 +62,17 @@ export default () => {
         }
 
       } catch (e: any) {
-        console.error(clc.red(`Error: ${e.message}`))
+        const errorFilePath = path.join(process.cwd(), opts.errors)
+        console.log(clc.red(`✖ Error executing file: ${clc.underline(file)}`))
+        console.log(clc.cyanBright(`→ Saving error to file: `) + clc.underline(errorFilePath) + '\n')
 
-        if (opts.errors) {
-          console.error(e)
-        }
+        fs.writeFileSync(errorFilePath, e.toString())
+        // console.log(`${clc.red('✔ Error:')} Result saved successfully\n`)
+
+        // if (opts.errors) {
+        //   console.error(e)
+        // }
+        // console.error(clc.red(`Error: ${e.message}`))
       }
 
     })
