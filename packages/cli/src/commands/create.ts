@@ -130,7 +130,7 @@ export default () => {
         const { name } = projectName ? { name: projectName } : await prompts({ type: 'text', name: 'name', message: 'Enter project name', initial: projectName })
         const projectDir = opts.dir ?? name
 
-        if (fs.existsSync(projectDir)) {
+        if (fs.existsSync(projectDir) && projectDir !== '.') {
           console.log(`${clc.red('✖ Error: ')} Path ${projectDir} already exists and is not an empty directory`)
           return
         }
