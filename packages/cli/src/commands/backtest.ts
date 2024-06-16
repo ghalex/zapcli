@@ -88,7 +88,7 @@ export default () => {
         strategy.addAnalyzers(analyzersList)
         console.log('')
 
-        const { symbols, maxWindow, settings } = api.code().getSymbols(code, lang, [], config.backtest?.inputs ?? {})
+        const { symbols, maxWindow, settings } = api.code().getRequirements(code, lang, [], config.backtest?.inputs ?? {})
         const bars: Record<string, any[]> = await api.data(config).downloadBars(symbols, maxWindow + window, settings.timeframe ?? 1440, opts.endDate)
 
         // 2. Run backtest
