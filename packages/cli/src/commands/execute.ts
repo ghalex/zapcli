@@ -62,11 +62,17 @@ export default () => {
         }
 
       } catch (e: any) {
-        const errorFilePath = path.join(process.cwd(), opts.errors)
         console.log(clc.red(`✖ Error executing file: ${clc.underline(file)}`))
-        console.log(clc.cyanBright(`→ Saving error to file: `) + clc.underline(errorFilePath) + '\n')
+        
+        if (opts.errors) {
+          const errorFilePath = path.join(process.cwd(), opts.errors)
+          fs.writeFileSync(errorFilePath, e.toString())
+          
+          console.log(clc.cyanBright(`→ Saving error to file: `) + clc.underline(errorFilePath) + '\n')
+        } else {
+          console.error(clc.red(`Error: ${e.message}`))
+        }
 
-        fs.writeFileSync(errorFilePath, e.toString())
         // console.log(`${clc.red('✔ Error:')} Result saved successfully\n`)
 
         // if (opts.errors) {

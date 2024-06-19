@@ -1,6 +1,6 @@
 {
   "name": "@zapcli/core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/zapcli-core.cjs.js",
   "module": "dist/zapcli-core.es.js",

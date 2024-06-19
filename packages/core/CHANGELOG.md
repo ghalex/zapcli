@@ -1,5 +1,11 @@
 # @zapcli/core
 
+## 1.0.4
+
+### Patch Changes
+
+- fix execute errors filename
+
 ## 1.0.3
 
 ### Patch Changes

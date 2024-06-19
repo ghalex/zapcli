@@ -19,14 +19,13 @@ export default () => {
     zpEnv.bind('barIndex', 1)
     zpEnv.bind('date', new Date(Object.values(bars)?.[0]?.[0].date))
 
-    zpEnv.call('setCash', inputs.initialCapital ?? 10_000)
+    zpEnv.call('setCash', inputs.cash ?? inputs.initialCapital ?? 10_000)
     zpEnv.call('setPositions', inputs.openPositions ?? [])
 
     let result = {}
     let error = null
 
     try {
-      console.log('before eval')
       result = evalCode(zpEnv, code)
     } catch (err: any) {
       error = err.message
@@ -52,7 +51,7 @@ export default () => {
     env.barIndex = 1
     env.date = new Date(Object.values(bars)?.[0]?.[0].date)
 
-    env.setCash(inputs.initialCapital ?? 10_000)
+    env.setCash(inputs.cash ?? inputs.initialCapital ?? 10_000)
     env.setPositions(inputs.openPositions ?? [])
 
     const execFunc = new Function(code)
