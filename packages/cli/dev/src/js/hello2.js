@@ -4,16 +4,8 @@ const settings = {}
 
 function run() {
 
-  // Returns true if short signal
-  function shortSignal (symbol) {
-    const closeToday = this.asset(symbol).close
-    const ema = this.ema(30, symbol)
-    const lowest = this.lowest(14, symbol, {offset: 1, prop: 'close'})
-
-    this.print(closeToday, ema, lowest)
-  }
-
-  shortSignal("ETH/USD")
+  const order = this.buy(this.asset('ETH/USD'), 1, { limitPrice: 3000 })
+  this.print(order)
 }
 
 return { assets, window, run }

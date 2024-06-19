@@ -145,7 +145,7 @@ const zpTrade = (env) => {
     if (qty < 0) throw new Error(`${action} {${asset.symbol}}: Quantity cannot be negative`)
     if (!isAsset(asset)) throw new Error(`"asset" must be a Bar object, received ${typeof asset}`)
 
-    const [order] = helpers.order.createOrdersUnits([asset.symbol], { [asset.symbol]: 1 }, qty, action, bars, options.round)
+    const [order] = helpers.order.createOrdersUnits([asset.symbol], { [asset.symbol]: 1 }, qty, action, bars, options)
 
     if (options.target) {
       const newOrder = balanceOne(order, data.positions.find(p => p.symbol === order.symbol))

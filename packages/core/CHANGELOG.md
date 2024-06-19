@@ -1,5 +1,11 @@
 # @zapcli/core
 
+## 1.0.5
+
+### Patch Changes
+
+- add ability to set limit price
+
 ## 1.0.4
 
 ### Patch Changes

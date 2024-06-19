@@ -11,8 +11,9 @@ import dayjs from "dayjs"
  * @param round 
  * @returns 
  */
-const createOrdersUnits = (symbols: string[], weights: Record<string, number>, units: number, action: OrderAction, bars: Bars, round?: boolean) => {
+const createOrdersUnits = (symbols: string[], weights: Record<string, number>, units: number, action: OrderAction, bars: Bars, options?: any) => {
   const res: Order[] = []
+  const { round, limitPrice } = options ?? {}
 
   for (const symbol of symbols) {
     const today = bars[symbol][0]
@@ -23,6 +24,7 @@ const createOrdersUnits = (symbols: string[], weights: Record<string, number>, u
       date: datetime,
       dateFormatted: dayjs(datetime).toISOString(),
       price: today.close,
+      limitPrice,
       units: round ? Math.floor(weights[symbol] * units) : floorNumber(weights[symbol] * units, 6),
       action,
       status: 'created'
@@ -44,8 +46,9 @@ const createOrdersUnits = (symbols: string[], weights: Record<string, number>, u
  * @param round 
  * @returns 
  */
-const createOrdersAmount = (symbols: string[], weights: Record<string, number>, amount: number, action: OrderAction, bars: Bars, round?: boolean) => {
+const createOrdersAmount = (symbols: string[], weights: Record<string, number>, amount: number, action: OrderAction, bars: Bars, options?: any) => {
   const res: Order[] = []
+  const { round, limitPrice } = options ?? {}
 
   for (const symbol of symbols) {
     const today = bars[symbol][0]
@@ -59,6 +62,7 @@ const createOrdersAmount = (symbols: string[], weights: Record<string, number>, 
       date: datetime,
       dateFormatted: dayjs(datetime).toISOString(),
       price,
+      limitPrice,
       units,
       action,
       status: 'created'

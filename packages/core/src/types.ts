@@ -58,6 +58,7 @@ export interface Position {
 export interface OrderOptions {
   round?: boolean
   target?: boolean
+  limitPrice?:number
 }
 
 export interface IndicatorOptions {
