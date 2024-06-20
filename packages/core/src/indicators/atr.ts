@@ -4,7 +4,7 @@ import trueRange from './trueRange'
 import array from '../helpers/array'
 
 const atr = (bars: Bars) =>
-  (len: number = 5, symbol: string, { roll, offset }: IndicatorOptions = {}): any => {
+  (len: number = 5, symbol: string, { roll, offset }: IndicatorOptions = {}): number | number[] => {
     const minLen = len + (roll ?? 0) + (offset ?? 0)
     const data: Bar[] = Array.isArray(symbol) ? symbol : bars[symbol] as Bar[]
 

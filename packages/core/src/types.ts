@@ -72,3 +72,10 @@ export interface RollingConfig {
   partial: boolean
 }
 
+export interface Asset {
+  symbol: string
+  open: number
+  close: number
+  high: number
+  low: number
+}

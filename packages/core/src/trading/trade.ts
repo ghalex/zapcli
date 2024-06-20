@@ -166,11 +166,11 @@ const zpTrade = (env) => {
     return buy(asset, qty, options)
   }
 
-  const sell = (asset: Bar, qty: number, options = {}) => {
+  const sell = (asset: Bar, qty: number, options: OrderOptions = {}) => {
     return order('sell', asset, qty, options)
   }
 
-  const sellAmount = (asset: Bar, amount: number, options: any = {}) => {
+  const sellAmount = (asset: Bar, amount: number, options: OrderOptions = {}) => {
     const qty = options.round ? Math.floor(amount / asset.close) : amount / asset.close
     return sell(asset, qty, options)
   }

@@ -1,9 +1,10 @@
+import { Asset, Bar } from ".."
 
 const zpAssets = (env) => {
   const { bars } = env
 
   return {
-    asset: (symbol: string, op = {}) => {
+    asset: (symbol: string, op = {}): Bar => {
       const { prop, daysAgo } = { prop: null, daysAgo: 0, ...op }
 
       if (!bars[symbol]) {
@@ -17,7 +18,7 @@ const zpAssets = (env) => {
       return prop ? bars[symbol][daysAgo][prop] : bars[symbol][daysAgo]
     },
 
-    assets: (symbol: string, window: number, op = {}) => {
+    assets: (symbol: string, window: number, op = {}): Bar[] => {
       const { prop, daysAgo } = { prop: null, daysAgo: 0, ...op }
 
       if (!bars[symbol]) {
