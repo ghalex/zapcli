@@ -1,5 +1,11 @@
 # @zapcli/cli
 
+## 1.0.18
+
+### Patch Changes
+
+- update dependencies
+
 ## 1.0.17
 
 ### Patch Changes

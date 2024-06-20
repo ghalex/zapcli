@@ -28,7 +28,9 @@ module.exports = [
       '@zapcli/backtest',
       '@zapant/calendar',
       'dayjs',
-      'voca'
+      'voca',
+      'pug',
+      'fs-extra'
     ],
     plugins: [
       esbuild(),
