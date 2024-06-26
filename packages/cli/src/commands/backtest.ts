@@ -2,7 +2,7 @@ import * as path from 'node:path'
 import * as fs from 'node:fs'
 import clc from 'cli-color'
 import { Command } from 'commander'
-import { init, map } from 'ramda'
+import { map } from 'ramda'
 import dayjs from 'dayjs'
 import voca from 'voca'
 import { Strategy, analyzers } from '@zapcli/backtest'
@@ -12,17 +12,17 @@ import calendar from '@zapant/calendar'
 
 const program = new Command('backtest')
 
-class LoggerAnalyzer {
-  name: string = 'logger'
+// class LoggerAnalyzer {
+//   name: string = 'logger'
 
-  next({ strategy, date, barIndex, bars, orders }) {
-    console.log(`Date: ${date}, BarIndex: ${barIndex}`)
-    console.log(`Cash: ${strategy.broker.getCash()}`)
-    console.log(`Bars:`)
-    console.dir(bars, { depth: null, colors: true })
-    // console.log(strategy.broker.getOpenPositions())
-  }
-}
+//   next({ strategy, date, barIndex, bars, orders }) {
+//     console.log(`Date: ${date}, BarIndex: ${barIndex}`)
+//     console.log(`Cash: ${strategy.broker.getCash()}`)
+//     console.log(`Bars:`)
+//     console.dir(bars, { depth: null, colors: true })
+//     // console.log(strategy.broker.getOpenPositions())
+//   }
+// }
 
 export default () => {
   program
