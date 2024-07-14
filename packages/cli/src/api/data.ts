@@ -5,6 +5,7 @@ import prompts from 'prompts'
 import cache from './cache'
 import storage from '../storage'
 import dayjs from 'dayjs'
+import csv from 'csvtojson'
 
 export default (config) => {
   const axios: AxiosInstance = Axios.create({
@@ -13,6 +14,12 @@ export default (config) => {
     headers: {
       'Content-Type': 'application/json'
     }
+  })
+
+
+  const yahooAxios: AxiosInstance = Axios.create({
+    baseURL: 'https://query1.finance.yahoo.com/v7/finance/download',
+    timeout: 80000
   })
 
   /**
@@ -61,12 +68,64 @@ export default (config) => {
     }
   }
 
+  /**
+   * Download bars uzing Yahoo Finance provider
+   * @param symbols 
+   * @param window 
+   * @param resolution 
+   * @param end 
+   * @returns 
+   */
+  const downloadYahoo = async (symbols: string[], window: number, resolution?: number, end?: string) => {
+    const resolutionMap = {
+      1440: '1d',
+      90: '90m',
+      60: '60m',
+      30: '30m',
+      15: '15m',
+      5: '5m',
+    }
+
+    if(resolution && !resolutionMap[resolution]) {
+      throw new Error(`${resolution} resolution not supported`)
+    }
+
+    const promises = symbols.map(async (symbol) => {
+      const period2 = end ? dayjs(end).add(1, 'days').unix() : dayjs().unix()
+      const period1 = dayjs.unix(period2).subtract(window, 'days').unix()
+      const interval = resolution ? resolutionMap[resolution] : '1d'
+      const url = `/${symbol}?period1=${period1}&period2=${period2}&interval=${interval}&events=history`
+      const response = await yahooAxios.get(url)
+      const json = await csv().fromString(response.data)
+      return {
+        symbol,
+        bars: json.map(bar => ({
+          symbol,
+          open: parseFloat(bar.Open),
+          high: parseFloat(bar.High),
+          low: parseFloat(bar.Low),
+          close: parseFloat(bar.Close),
+          volume: parseFloat(bar.Volume),
+          date: dayjs(bar.Date).valueOf(),
+          dateFormatted: dayjs(bar.Date).toISOString()
+        })).reverse()
+      }
+    })
+
+    const data = await Promise.all(promises)
+    const formatted = data.reduce((acc, curr) => {
+      acc[curr.symbol] = curr.bars
+      return acc
+    }, {})
+    return formatted
+  }
+
   const download = async (provider: string, symbols: string[], window: number, resolution?: number, end?: string) => {
     switch (provider) {
       case 'zapant':
         return downloadZapant(symbols, window, resolution, end)
       case 'yahoo':
-        throw new Error('Yahoo provider is not implemented yet')
+        return downloadYahoo(symbols, window, resolution, end)
       default:
         throw new Error('Invalid provider')
     }
