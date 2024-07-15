@@ -6,6 +6,12 @@ import cache from './cache'
 import storage from '../storage'
 import dayjs from 'dayjs'
 
+interface DataDownloadOptions {
+  resolution?: number
+  end?: string
+  auto?: boolean
+}
+
 export default (config) => {
   const axios: AxiosInstance = Axios.create({
     baseURL: config.apiUrl ?? 'https://zapant.com/api',
@@ -23,10 +29,12 @@ export default (config) => {
    * @param end 
    * @returns 
    */
-  const downloadZapant = async (symbols: string[], window: number, resolution?: number, end?: string) => {
+  const downloadZapant = async (symbols: string[], window: number, options: DataDownloadOptions) => {
     if (!storage.get('accessToken')) {
       throw new Error('You must be logged in to download data. Please run `zplang login` command.')
     }
+
+    const { resolution, end } = options
 
     try {
       const params = {
@@ -61,10 +69,10 @@ export default (config) => {
     }
   }
 
-  const download = async (provider: string, symbols: string[], window: number, resolution?: number, end?: string) => {
+  const download = async (provider: string, symbols: string[], window: number, options: DataDownloadOptions) => {
     switch (provider) {
       case 'zapant':
-        return downloadZapant(symbols, window, resolution, end)
+        return downloadZapant(symbols, window, options)
       case 'yahoo':
         throw new Error('Yahoo provider is not implemented yet')
       default:
@@ -81,9 +89,10 @@ export default (config) => {
    * @param end 
    * @returns 
    */
-  const downloadBars = async (symbols: string[], maxWindow: number, resolution?: number, end?: string, auto?: boolean) => {
+  const downloadBars = async (symbols: string[], maxWindow: number, options: DataDownloadOptions) => {
     let bars = {}
     const dataDir = config.dataDir
+    const { resolution, end, auto } = options
     let missing: string[] = []
 
     // if end is undefined always fetch latest price
@@ -114,7 +123,7 @@ export default (config) => {
       })
 
       if (response.value) {
-        const provider = auto ? {value: config.dataProvider} : await prompts({
+        const provider = auto ? { value: config.dataProvider } : await prompts({
           type: 'select',
           name: 'value',
           message: 'Select data provider',
@@ -128,7 +137,7 @@ export default (config) => {
         spinner.start()
 
         try {
-          const data = await download(provider.value, missing, maxWindow, resolution, end)
+          const data = await download(provider.value, missing, maxWindow, { resolution, end })
           spinner.succeed()
 
           // Save data to cache
@@ -147,6 +156,7 @@ export default (config) => {
         }
       } else {
         console.log(`${clc.green('✔ Success:')} Data was not downloaded`)
+        throw new Error('Data is missing')
       }
 
     } else {

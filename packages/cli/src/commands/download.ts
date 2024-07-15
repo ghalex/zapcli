@@ -22,9 +22,8 @@ export default () => {
         const symbols = opts.symbols.split(',')
         const end = opts.end ? new Date(opts.end).toISOString() : undefined
 
-        await data(config).downloadBars(symbols, window, resolution, end, opts.auto)
-        // const d = cache(config).get("TSLA", 5, 1440, "2024-05-14")
-        // console.log(d)
+        await data(config).downloadBars(symbols, window, { resolution, end, auto: opts.auto })
+
       } catch (e: any) {
         console.error(clc.red(`Error: ${e.message}`))
         return process.exit(0)

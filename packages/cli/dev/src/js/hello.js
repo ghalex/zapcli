@@ -1,16 +1,20 @@
-const assets = ["BTC/USD", "ETH/USD", "SOL/USD", "LINK/USD"]
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+const symbols = ["BTC/USD", "ETH/USD", "SOL/USD", "LINK/USD"]
 const window = 60
-const settings = {}
+const settings = {
+  market: 'crypto'
+}
 
 function run() {
-  const amount = this.getTotalCapital() / assets.length
+  const amount = this.getTotalCapital() / symbols.length
   // this.print('Amount amount to buy: ', amount)
 
   // this.print('Bars: ', this.barIndex)
   // this.print(this.getPositions())
 
 
-  for (let symbol of assets) {
+  for (let symbol of symbols) {
     const ema30 = this.ema(30, symbol)
     const close = this.asset(symbol).close
 
@@ -45,4 +49,4 @@ function run() {
   this.print(this.getOrders())
 }
 
-return { assets, window, run }
+return { symbols, window, settings, run }

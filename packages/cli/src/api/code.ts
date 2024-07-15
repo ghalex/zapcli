@@ -96,7 +96,7 @@ export default () => {
     metaEnv.bind('barIndex', 1)
     metaEnv.bind('date', new Date())
     metaEnv.bind('inputs', inputs)
-    metaEnv.call('setCash', inputs.initialCapital ?? 10_000)
+    metaEnv.call('setCash', inputs.cash ?? inputs.initialCapital ?? 10_000)
 
     // Set positions
     metaEnv.call('setPositions', [...openPositions])
@@ -120,9 +120,11 @@ export default () => {
   function getJsRequirements(code: string, openPositions: any = [], inputs: any = {}) {
     const execFunc = new Function(code)
     const res = execFunc()
+    const codeSymbols = res.symbols ?? res.assets ?? []
+    const inputsSymbols = inputs.symbols ?? inputs.assets ?? []
 
     const symbols = uniq([
-      ...uniq([...res.assets, ...inputs.assets]),
+      ...uniq([...codeSymbols, ...inputsSymbols]),
       ...openPositions.map(p => p.symbol),
       ...(inputs.openPositions?.map(p => p.symbol) ?? [])
     ])

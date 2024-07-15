@@ -31,7 +31,7 @@ export default () => {
     .argument('file', 'strategy to backtest')
     .option('-d1, --startDate <startDate>', 'backtest start date')
     .option('-d2, --endDate <endDate>', 'backtest end date')
-    .option('-m, --market <market>', 'market to use')
+    // .option('-m, --market <market>', 'market to use')
     .option('-s, --save <file>', 'save result to file')
     .option('-v, --verbose', 'verbose mode', false)
     .option('-a, --analyzers <analyzers...>', 'analyzers to use')
@@ -51,15 +51,17 @@ export default () => {
         opts.startDate = opts.startDate ?? config.backtest?.startDate ?? dayjs().endOf('day').subtract(1, 'week').format('YYYY-MM-DD')
         opts.endDate = opts.endDate ?? config.backtest?.endDate ?? dayjs().endOf('day').format('YYYY-MM-DD')
         opts.save = opts.save ?? path.basename(file, extension) + '.json'
-        opts.market = opts.market ?? config.backtest?.market ?? 'stocks'
 
-        // console.log(config.backtest)
-        // console.log(opts)
-        const dates = calendar.getDays({ start: opts.startDate, end: opts.endDate }, opts.market).map(x => x.date) //allDatas[0].map(x => dayjs(x.date).format('YYYY-MM-DD')).slice(0, parseInt(opts.window)).reverse()
+        const code = api.code().readCode(file)
+        const { symbols, maxWindow, settings } = api.code().getRequirements(code, lang, [], config.backtest?.inputs ?? {})
+
+        if (!settings.market) throw new Error('Market is required. You need to set market in "settings.market". It can be stocks, crypto.')
+
+        const { market } = settings.market
+        const dates = calendar.getDays({ start: opts.startDate, end: opts.endDate }, market).map(x => x.date) //allDatas[0].map(x => dayjs(x.date).format('YYYY-MM-DD')).slice(0, parseInt(opts.window)).reverse()
         const window = dates.length
 
         // 1. Download bars
-        const code = api.code().readCode(file)
         const strategy = new Strategy({ code, lang, verbose: opts.verbose, inputs: config.backtest?.inputs ?? {} })
 
         //strategy.addAnalyzer(new LoggerAnalyzer())
@@ -88,8 +90,7 @@ export default () => {
         strategy.addAnalyzers(analyzersList)
         console.log('')
 
-        const { symbols, maxWindow, settings } = api.code().getRequirements(code, lang, [], config.backtest?.inputs ?? {})
-        const bars: Record<string, any[]> = await api.data(config).downloadBars(symbols, maxWindow + window, settings.timeframe ?? 1440, opts.endDate)
+        const bars: Record<string, any[]> = await api.data(config).downloadBars(symbols, maxWindow + window, { resolution: settings.resolution ?? 1440, end: opts.endDate })
 
         // 2. Run backtest
         const allDatas: any[] = Object.values(bars)

@@ -4,5 +4,6 @@
         "*.zp": "clojure"
     },
     "npm.packageManager": "pnpm",
-    "editor.minimap.enabled": false
+    "editor.minimap.enabled": false,
+    "editor.fontSize": 14
 }

@@ -4,6 +4,7 @@ const zpAssets = (env) => {
   const { bars } = env
 
   return {
+    // getBar
     asset: (symbol: string, op = {}): Bar => {
       const { prop, daysAgo } = { prop: null, daysAgo: 0, ...op }
 
@@ -18,6 +19,7 @@ const zpAssets = (env) => {
       return prop ? bars[symbol][daysAgo][prop] : bars[symbol][daysAgo]
     },
 
+    // getBars
     assets: (symbol: string, window: number, op = {}): Bar[] => {
       const { prop, daysAgo } = { prop: null, daysAgo: 0, ...op }
 

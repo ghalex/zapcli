@@ -33,9 +33,18 @@ export default () => {
 
         opts.date = opts.date ?? config.execute?.date ?? undefined // dayjs().endOf('day').format('YYYY-MM-DD')
         opts.errors = opts.errors ?? config.execute?.errors ?? undefined
-        
-        const bars = await api.data(config).downloadBars(requirements.symbols, requirements.maxWindow, requirements?.settings?.timeframe ?? 1440, opts.date, opts.auto)
-        let result = api.code().runCode(code, lang, bars, config.execute?.inputs ?? {})
+
+        const bars = await api.data(config).downloadBars(
+          requirements.symbols,
+          requirements.maxWindow,
+          {
+            resolution: requirements.settings?.resolution ?? 1440,
+            end: opts.date,
+            auto: opts.auto
+          }
+        )
+
+        const result = api.code().runCode(code, lang, bars, config.execute?.inputs ?? {})
 
         console.log(`${clc.green('✔ Success:')} Code was executed successfully`)
         console.log(`${clc.green('✔ Execution time:')} ${clc.bold(result.time.toFixed(2))} seconds\n`)
@@ -63,11 +72,11 @@ export default () => {
 
       } catch (e: any) {
         console.log(clc.red(`✖ Error executing file: ${clc.underline(file)}`))
-        
+
         if (opts.errors) {
           const errorFilePath = path.join(process.cwd(), opts.errors)
           fs.writeFileSync(errorFilePath, e.toString())
-          
+
           console.log(clc.cyanBright(`→ Saving error to file: `) + clc.underline(errorFilePath) + '\n')
         } else {
           console.error(clc.red(`Error: ${e.message}`))
