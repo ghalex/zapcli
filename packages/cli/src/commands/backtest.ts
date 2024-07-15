@@ -57,7 +57,7 @@ export default () => {
 
         if (!settings.market) throw new Error('Market is required. You need to set market in "settings.market". It can be stocks, crypto.')
 
-        const { market } = settings.market
+        const market = settings.market
         const dates = calendar.getDays({ start: opts.startDate, end: opts.endDate }, market).map(x => x.date) //allDatas[0].map(x => dayjs(x.date).format('YYYY-MM-DD')).slice(0, parseInt(opts.window)).reverse()
         const window = dates.length
 
