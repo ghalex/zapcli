@@ -109,7 +109,7 @@ export default (config) => {
         calendar.getDaysUntil(dayjs.unix(endDate).toDate(), window + 1, resolution)?.[0]?.date
         ).unix()
     
-      const promises = symbols.map(async (symbol) => {
+    const promises = symbols.map(async (symbol) => {
       const formattedSymbol = symbol.replace('/', '-')
       const url = `/${formattedSymbol}?period1=${startDate}&period2=${endDate}&interval=${interval}&events=history`
       const response = await yahooAxios.get(url)
