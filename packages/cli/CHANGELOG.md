@@ -1,5 +1,14 @@
 # @zapcli/cli
 
+## 1.0.19
+
+### Patch Changes
+
+- add yahoo and symbols
+- Updated dependencies
+  - @zapcli/core@1.0.7
+  - @zapcli/backtest@1.0.7
+
 ## 1.0.18
 
 ### Patch Changes
