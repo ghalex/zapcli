@@ -6,6 +6,7 @@ import cache from './cache'
 import storage from '../storage'
 import dayjs from 'dayjs'
 import csv from 'csvtojson'
+import calendar from '@zapant/calendar'
 
 interface DataDownloadOptions {
   resolution?: number
@@ -99,11 +100,18 @@ export default (config) => {
       throw new Error(`${resolution} resolution not supported`)
     }
 
-    const promises = symbols.map(async (symbol) => {
-      const period2 = end ? dayjs(end).add(1, 'days').unix() : dayjs().unix()
-      const period1 = dayjs.unix(period2).subtract(window, 'days').unix()
-      const interval = resolution ? resolutionMap[resolution] : '1d'
-      const url = `/${symbol}?period1=${period1}&period2=${period2}&interval=${interval}&events=history`
+    const interval = resolution ? resolutionMap[resolution] : '1d'
+    const isCrypto = symbols.some(s => s.includes('/'))
+    const endDate = end ? dayjs(end).add(1, 'days').unix() : dayjs().unix()
+    const startDate = isCrypto
+      ? dayjs.unix(endDate).subtract(window, 'days').unix()
+      : dayjs(
+        calendar.getDaysUntil(dayjs.unix(endDate).toDate(), window + 1, resolution)?.[0]?.date
+        ).unix()
+    
+      const promises = symbols.map(async (symbol) => {
+      const formattedSymbol = symbol.replace('/', '-')
+      const url = `/${formattedSymbol}?period1=${startDate}&period2=${endDate}&interval=${interval}&events=history`
       const response = await yahooAxios.get(url)
       const json = await csv().fromString(response.data)
       return {
