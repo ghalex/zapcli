@@ -1,5 +1,11 @@
 # @zapcli/core
 
+## 1.0.8
+
+### Patch Changes
+
+- fix short position
+
 ## 1.0.7
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @zapcli/cli
 
+## 1.0.20
+
+### Patch Changes
+
+- fix short position
+- Updated dependencies
+  - @zapcli/backtest@1.0.8
+  - @zapcli/core@1.0.8
+
 ## 1.0.19
 
 ### Patch Changes
