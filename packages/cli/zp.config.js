@@ -93,7 +93,7 @@ const config = {
   backtestsDir: "./dev/backtests",
   dataProvider: "zapant", // async (params) => [{...}]
   execute: {
-    date: "2024-07-14",
+    date: "2024-07-12",
     // errors: "./dev/errors.txt",
     inputs: {
       assets: [],

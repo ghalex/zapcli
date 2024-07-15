@@ -63,6 +63,7 @@
     "cli-color": "^2.0.4",
     "commander": "^12.1.0",
     "configstore": "^6.0.0",
+    "csvtojson": "^2.0.10",
     "dayjs": "^1.11.11",
     "figlet": "^1.7.0",
     "fs-extra": "^11.2.0",
