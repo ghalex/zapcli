@@ -55,9 +55,9 @@ export default () => {
         const code = api.code().readCode(file)
         const { symbols, maxWindow, settings } = api.code().getRequirements(code, lang, [], config.backtest?.inputs ?? {})
 
-        if (!settings.market) throw new Error('Market is required. You need to set market in "settings.market". It can be stocks, crypto.')
+        const isStocks = symbols.map(s => s.includes('/')).every(x => !x)
+        const market = isStocks ? 'stocks' : 'crypto'
 
-        const { market } = settings.market
         const dates = calendar.getDays({ start: opts.startDate, end: opts.endDate }, market).map(x => x.date) //allDatas[0].map(x => dayjs(x.date).format('YYYY-MM-DD')).slice(0, parseInt(opts.window)).reverse()
         const window = dates.length
 

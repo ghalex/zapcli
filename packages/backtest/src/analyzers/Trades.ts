@@ -10,8 +10,8 @@ class TreadesAnalyzer extends BaseAnalyzer {
     avgWinningTrade: 0,
     avgLosingTrade: 0,
     winRate: 0,
-    bestTrade: null as any,
-    worstTrade: null as any,
+    bestTrade: 0,
+    worstTrade: 0,
     maxTradeDuration: 0, // in seconds
     avgTradeDuration: 0, // in seconds
   }
@@ -24,7 +24,7 @@ class TreadesAnalyzer extends BaseAnalyzer {
 
     for (const position of positions) {
       this.data.nbOfTrades += 1
-      const profit = (position.closePrice - position.openPrice) * position.units
+      const profit = position.stats.pl
 
       // Calculate nr of winning and losing trades
       if (profit > 0) {
@@ -36,10 +36,10 @@ class TreadesAnalyzer extends BaseAnalyzer {
       }
 
       // Calculate best and worst trade
-      if (!this.data.bestTrade || profit > this.data.bestTrade) {
+      if (profit > this.data.bestTrade) {
         this.data.bestTrade = profit
       }
-      if (!this.data.worstTrade || profit < this.data.worstTrade) {
+      if (profit < this.data.worstTrade) {
         this.data.worstTrade = profit
       }
 

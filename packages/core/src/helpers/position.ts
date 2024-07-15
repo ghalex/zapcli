@@ -1,5 +1,6 @@
 import { Bars, FilledOrder, Order, Position } from "../types"
 import dayjs from "dayjs"
+import { floorNumber } from "./number"
 
 const getToday = (symbol: string, bars: Bars) => {
   const arr = bars[symbol] ?? []
@@ -76,10 +77,18 @@ const generateClosePositions = (openPositions: Position[], bars: Bars) => {
   return res
 }
 
+const value = (p: Position, today?: any) => {
+  const closePrice = p.closePrice ?? today?.close ?? 0
+  const pl = floorNumber((closePrice - p.openPrice) * p.units, 2) * (p.side === 'long' ? 1 : -1)
+
+  return p.openPrice * p.units + pl
+}
+
 export default {
   isOpen,
   isClose,
   openPosition,
   closePosition,
+  value,
   generateClosePositions
 }

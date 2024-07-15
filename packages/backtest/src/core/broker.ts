@@ -51,7 +51,7 @@ class Broker {
   }
 
   getValue() {
-    const positionsValue = this.getOpenPositions().reduce((acc, p) => acc + (p.units * this.bars[p.symbol][0].close), 0)
+    const positionsValue = this.getOpenPositions().reduce((acc, p) => acc + p.stats.value, 0)
     return floor(this.getCash() + positionsValue, 2)
   }
 
@@ -67,11 +67,12 @@ class Broker {
     return this.positions.map(p => {
       const today = this.bars[p.symbol]?.[0]
       const closePrice = p.closePrice ?? today?.close ?? 0
+      const pl = floor((closePrice - p.openPrice) * p.units, 2) * (p.side === 'long' ? 1 : -1)
       return {
         ...p,
         stats: {
-          pl: floor((closePrice - p.openPrice) * p.units, 2),
-          value: floor(closePrice * p.units, 2),
+          pl,
+          value: p.openPrice * p.units + pl,
           currentPrice: closePrice,
         }
       }
@@ -93,6 +94,8 @@ class Broker {
         units: position.units,
         status: 'created'
       }
+
+      console.log(order)
 
       this.fillOrder(order, bars)
     }
@@ -171,6 +174,7 @@ class Broker {
   executeOrder(order: any) {
     const resultPositions = this.getOpenPositions().map(p => ({ ...p }))
     const p = resultPositions.find((p: any) => p.symbol === order.symbol)
+    const today = this.bars[order.symbol][0]
 
     if (p) {
       if (this.sameSide(p, order)) {
@@ -186,16 +190,15 @@ class Broker {
           const closedPart = helpers.position.closePosition(p, order)
           resultPositions.push(closedPart)
 
-          this.changeCash(this.getCash() + (order.fillCost - order.fillCommision))
+          this.changeCash(this.getCash() + (helpers.position.value(closedPart, today) - order.fillCommision))
           this.eventHandler?.onPosition(p)
-
         } else {
           // Close the position
           p.closeDate = order.fillDate
           p.closePrice = order.fillPrice
           p.closeBar = order.fillBar
 
-          this.changeCash(this.getCash() + (order.fillCost - order.fillCommision))
+          this.changeCash(this.getCash() + (helpers.position.value(p, today) - order.fillCommision))
 
           // Open a new position with the remaining units
           const diffAmmount = floor((order.fillUnits - p.units) * order.fillPrice, 2)

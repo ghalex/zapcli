@@ -96,19 +96,15 @@ const config = {
     date: "2024-07-12",
     // errors: "./dev/errors.txt",
     inputs: {
-      assets: [],
+      symbols: [],
       initialCapital: 10000,
       cash: 5000,
       openPositions: [] // samplePositions
     },
   },
   backtest: {
-    startDate: "2024-01-01",
-    endDate: "2024-06-01",
-    market: "crypto",
-    inputs: {
-      assets: []
-    },
+    startDate: "2024-04-12",
+    endDate: "2024-04-22",
     analyzers: [
       new analyzers.RetursAnalyzer(),
       new analyzers.DrawDownAnalyzer(),
