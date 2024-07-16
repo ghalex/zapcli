@@ -1,5 +1,11 @@
 # @zapcli/cli
 
+## 1.0.21
+
+### Patch Changes
+
+- fix yahoo for stocks
+
 ## 1.0.20
 
 ### Patch Changes
