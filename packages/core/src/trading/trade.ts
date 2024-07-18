@@ -123,17 +123,16 @@ const zpTrade = (env) => {
     return false
   }
 
-  const closePositions = (value: Position[]) => {
+  const closePositions = (value: Position[], closePrices?: number[]) => {
     const positionsToClose = value ?? data.positions
     if (positionsToClose.length === 0) { return [] }
 
-    const newOrders = helpers.position.generateClosePositions(positionsToClose, bars).filter(o => {
+    const newOrders = helpers.position.generateClosePositions(positionsToClose, bars, closePrices).filter(o => {
       const existing = data.orders.find(order => order.symbol === o.symbol && order.action === o.action && order.isClose)
       return !existing
     })
 
     data.orders = helpers.order.mergeOrders([...data.orders, ...newOrders])
-
     return data.orders
   }
 
@@ -162,7 +161,8 @@ const zpTrade = (env) => {
   }
 
   const buyAmount = (asset: Bar, amount: number, options: OrderOptions = {}) => {
-    const qty = options.round ? Math.floor(amount / asset.close) : amount / asset.close
+    const price = options.limitPrice ?? asset.close
+    const qty = options.round ? Math.floor(amount / price) : amount /  price
     return buy(asset, qty, options)
   }
 
@@ -171,7 +171,8 @@ const zpTrade = (env) => {
   }
 
   const sellAmount = (asset: Bar, amount: number, options: OrderOptions = {}) => {
-    const qty = options.round ? Math.floor(amount / asset.close) : amount / asset.close
+    const price = options.limitPrice ?? asset.close
+    const qty = options.round ? Math.floor(amount / price) : amount / price
     return sell(asset, qty, options)
   }
 

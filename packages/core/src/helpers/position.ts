@@ -49,30 +49,29 @@ const closePosition = (position: Position, order: FilledOrder): Position => {
   return data
 }
 
-const generateClosePositions = (openPositions: Position[], bars: Bars) => {
+const generateClosePositions = (openPositions: Position[], bars: Bars, closePrices?: number[]) => {
   const res: Order[] = []
 
-  for (const position of openPositions) {
+  openPositions.forEach((position, index) => {
     const today = getToday(position.symbol, bars)
+    const closePrice = closePrices?.[index] ??  today.close
     const action = position.side === 'long' ? 'sell' : 'buy'
-
     if (today) {
       const datetime = dayjs(today.date).isSame(dayjs(), 'day') ? Date.now() : today.date
       const order: Order = {
         symbol: today.symbol,
         date: datetime,
         dateFormatted: dayjs(datetime).toISOString(),
-        price: today.close,
+        price: closePrice,
         units: position.units ?? 0,
         isClose: true,
-        value: today.close * (position.units ?? 0),
+        value: closePrice * (position.units ?? 0),
         action,
         status: 'created',
       }
-
       res.push(order)
     }
-  }
+  })
 
   return res
 }

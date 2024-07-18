@@ -95,8 +95,6 @@ class Broker {
         status: 'created'
       }
 
-      console.log(order)
-
       this.fillOrder(order, bars)
     }
   }
@@ -129,7 +127,7 @@ class Broker {
 
   fillOrder(order: any, bars: any) {
     const bar = bars[0]
-    const fillPrice = bar.close
+    const fillPrice = order.limitPrice ?? order.price ?? bar.close
     const fillDate = bar.date
     const fillUnits = order.units
     const fillCost = fillPrice * fillUnits
@@ -193,7 +191,7 @@ class Broker {
           this.changeCash(this.getCash() + (helpers.position.value(closedPart, today) - order.fillCommision))
           this.eventHandler?.onPosition(p)
         } else {
-          // Close the position
+            // Close the position
           p.closeDate = order.fillDate
           p.closePrice = order.fillPrice
           p.closeBar = order.fillBar
