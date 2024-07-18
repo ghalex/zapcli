@@ -11,7 +11,7 @@ export default () => {
    * @param bars 
    * @returns 
    */
-  const runZpCode = (code: string, bars, inputs: any = {}) => {
+  const runZpCode = (code: string, bars, inputs: any = {}, data = {}) => {
     const start = performance.now()
 
     const zpEnv = new Env({ bars })
@@ -43,7 +43,7 @@ export default () => {
     }
   }
 
-  const runJsCode = (code: string, bars, inputs: any = {}) => {
+  const runJsCode = (code: string, bars, inputs: any = {}, data: any = {}) => {
     const start = performance.now()
     const env: any = createJsEnv(bars)
 
@@ -72,13 +72,13 @@ export default () => {
     }
   }
 
-  const runCode = (code: string, lang: string, bars: any, inputs: any = {}) => {
+  const runCode = (code: string, lang: string, bars: any, inputs: any = {}, data: any = {}) => {
     switch (lang) {
       case 'js':
-        return runJsCode(code, bars, inputs)
+        return runJsCode(code, bars, inputs, data)
 
       case 'zp':
-        return runZpCode(code, bars, inputs)
+        return runZpCode(code, bars, inputs, data)
 
       default:
         throw new Error('Invalid file extension. It should be .js or .zp')
