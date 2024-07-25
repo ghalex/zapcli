@@ -75,15 +75,15 @@ const samplePositions = [
   // },
   {
     symbol: 'LINK/USD',
-    openDate: 1678752000000,
-    openPrice: 6.98836,
+    openDate: 1678579200000,
+    openPrice: 15.00,
     openBar: 73,
     closeDate: null,
     closePrice: null,
     closeBar: null,
-    units: 450.0,
+    units: 100.0,
     side: 'long',
-    stats: { pl: -194.48, value: 3035.18, currentPrice: 6.56755 }
+    stats: { pl: -10.22, value: 1500, currentPrice: 15 }
   }
 ]
 
@@ -93,13 +93,15 @@ const config = {
   backtestsDir: "./dev/backtests",
   dataProvider: "zapant", // async (params) => [{...}]
   execute: {
-    date: "2024-07-15",
+    date: "2024-07-18",
     // errors: "./dev/errors.txt",
     inputs: {
       symbols: [],
       initialCapital: 10000,
       cash: 5000,
-      openPositions: [] // samplePositions
+      openPositions: [
+        ...samplePositions
+      ] // samplePositions
     },
   },
   backtest: {

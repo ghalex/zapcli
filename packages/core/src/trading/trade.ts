@@ -1,9 +1,11 @@
 import type { Order, Position, Bar, OrderOptions } from '../types'
 import helpers from '../helpers'
-import position from '@/helpers/position'
+import assets from './assets'
+import dayjs from 'dayjs'
 
 const zpTrade = (env) => {
   const { bars } = env
+  const { asset, today } = assets(env)
 
   const data = {
     cash: 0,
@@ -18,7 +20,7 @@ const zpTrade = (env) => {
     if (data.positions.length === 0) return data.cash
 
     return data.cash + data.positions.reduce((acc, p) => {
-      const bar = bars[p.symbol]?.[0] ?? { close: p.openPrice }
+      const bar = asset(p.symbol) ?? { close: p.openPrice }
       return acc + p.units * bar.close
     }, 0)
   }
@@ -123,6 +125,17 @@ const zpTrade = (env) => {
     return false
   }
 
+  const positionInfo = (position: Position) => {
+    const bar = asset(position.symbol)
+
+    return {
+      isToday: dayjs(position.openDate).isSame(today(), 'day'),
+      daysOpen: position.closeDate ? 0 : dayjs(today()).diff(position.openDate, 'day'),
+      openValue: position.units * position.openPrice,
+      currentValue: position.units * bar.close
+    }
+  }
+
   const closePositions = (value: Position[], closePrices?: number[]) => {
     const positionsToClose = value ?? data.positions
     if (positionsToClose.length === 0) { return [] }
@@ -189,6 +202,7 @@ const zpTrade = (env) => {
     balance,
     hasPosition,
     closePositions,
+    positionInfo,
     order,
     buy,
     buyAmount,

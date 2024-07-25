@@ -1,4 +1,5 @@
 import { Asset, Bar } from ".."
+import { head } from 'ramda'
 
 const zpAssets = (env) => {
   const { bars } = env
@@ -34,6 +35,17 @@ const zpAssets = (env) => {
       const data = bars[symbol].slice(daysAgo, window + daysAgo)
 
       return prop ? data.map(b => b[prop]) : data
+    },
+
+    today: () => {
+      const keys = Object.keys(bars)
+
+      if (keys.length === 0) {
+        throw new Error('No assets loaded to get today')
+      }
+
+      const bar = bars[keys[0]][0]
+      return new Date(bar.date)
     }
   }
 }

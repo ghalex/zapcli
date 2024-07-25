@@ -3,14 +3,16 @@ const window = 1
 const settings = {}
 
 function run() {
-  if (this.barIndex === 1) {
-    this.sell(this.asset('AAPL'), 10)
-  }
-  // for (const symbol of symbols) {
-  //   this.sell(this.asset(symbol), 1)
-  // }
 
-  this.print(this.getOrders())
+  const LINK = this.asset("LINK/USD")
+  const [pos] = this.getPositions()
+
+  this.print(this.today())
+  // this.print(LINK)
+  this.print(pos)
+  this.print(new Date(pos.openDate))
+  this.print(this.positionInfo(pos))
+
 }
 
 return { symbols, window, settings, run }
