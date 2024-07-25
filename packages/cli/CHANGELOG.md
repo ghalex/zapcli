@@ -1,5 +1,13 @@
 # @zapcli/cli
 
+## 1.0.23
+
+### Patch Changes
+
+- Updated dependencies
+  - @zapcli/core@1.0.10
+  - @zapcli/backtest@1.0.10
+
 ## 1.0.22
 
 ### Patch Changes

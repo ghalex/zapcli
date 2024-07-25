@@ -1,5 +1,11 @@
 # @zapcli/core
 
+## 1.0.10
+
+### Patch Changes
+
+- small fix to position info
+
 ## 1.0.9
 
 ### Patch Changes

@@ -11,7 +11,7 @@ function run() {
   // this.print(LINK)
   this.print(pos)
   this.print(new Date(pos.openDate))
-  this.print(this.positionInfo(pos))
+  this.print(this.getPositionInfo(pos))
 
 }
 

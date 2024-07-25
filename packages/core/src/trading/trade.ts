@@ -125,7 +125,7 @@ const zpTrade = (env) => {
     return false
   }
 
-  const positionInfo = (position: Position) => {
+  const getPositionInfo = (position: Position) => {
     const bar = asset(position.symbol)
 
     return {
@@ -202,7 +202,7 @@ const zpTrade = (env) => {
     balance,
     hasPosition,
     closePositions,
-    positionInfo,
+    getPositionInfo,
     order,
     buy,
     buyAmount,
