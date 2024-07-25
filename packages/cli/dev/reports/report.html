@@ -29,6 +29,8 @@
       <select class="bg-gray-200 p-1 mb-2" id="file-select">
         <option value="hello-hold.json">hello-hold.json</option>
         <option value="hello.json">hello.json</option>
+        <option value="hello2.json">hello2.json</option>
+        <option value="test.json">test.json</option>
       </select>
       <p class="text-sm"><b class="mr-1">Date generated:</b><span id="date"></span></p>
       <p class="text-sm"><b class="mr-1">File:</b><span id="file"></span></p>
@@ -50,7 +52,7 @@
       import renderReport from "@zapcli/reports"
       
       const dataDir = "../backtests"
-      const dataFiles = ["hello-hold.json","hello.json"];
+      const dataFiles = ["hello-hold.json","hello.json","hello2.json","test.json"];
       const container = document.querySelector("#container")
       const fileSelect = document.querySelector("#file-select")
       

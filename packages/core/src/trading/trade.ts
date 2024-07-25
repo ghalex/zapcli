@@ -77,7 +77,7 @@ const zpTrade = (env) => {
     // close all positions that I don't need
     for (const pos of positions) {
       if (!orders.some(o => o.symbol === pos.symbol)) {
-        const [order] = helpers.position.generateClosePositions([pos], bars)
+        const [order] = helpers.order.generateCloseOrders([pos], bars)
         order.isClose = true
         resultOrders.push(order)
       }
@@ -127,7 +127,7 @@ const zpTrade = (env) => {
     const positionsToClose = value ?? data.positions
     if (positionsToClose.length === 0) { return [] }
 
-    const newOrders = helpers.position.generateClosePositions(positionsToClose, bars, closePrices).filter(o => {
+    const newOrders = helpers.order.generateCloseOrders(positionsToClose, bars, closePrices).filter(o => {
       const existing = data.orders.find(order => order.symbol === o.symbol && order.action === o.action && order.isClose)
       return !existing
     })
@@ -162,7 +162,7 @@ const zpTrade = (env) => {
 
   const buyAmount = (asset: Bar, amount: number, options: OrderOptions = {}) => {
     const price = options.limitPrice ?? asset.close
-    const qty = options.round ? Math.floor(amount / price) : amount /  price
+    const qty = options.round ? Math.floor(amount / price) : amount / price
     return buy(asset, qty, options)
   }
 

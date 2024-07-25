@@ -1,0 +1,28 @@
+
+(def symbols [
+  "ETH/USD"
+])
+
+(loop symbol in symbols
+    (def emaVal (ema 30 symbol))
+    (def amount (/ (getCash) (size symbols)))
+
+    (if (and
+            (crossover {symbol, 2 bars} emaVal)
+            (not (hasPosition symbol))
+        )
+
+        ;; over ema & no position
+        (buyAmount {symbol} amount)
+    )
+
+    (if (and
+            (crossunder {symbol, 2 bars} emaVal)
+            (hasPosition symbol)
+        )
+
+        ;; under ema & has position
+        (closePositions [(getPosition symbol)])
+    )
+)
+

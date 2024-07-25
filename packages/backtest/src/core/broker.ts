@@ -104,7 +104,8 @@ class Broker {
   }
 
   canFill(order: any, bar: any) {
-    const fillCost = bar.close * order.units
+    const fillPrice = order.limitPrice ?? order.price ?? bar.close
+    const fillCost = fillPrice * order.units
     const fillCommision = this.comission * fillCost
     const p = this.getOpenPositions().find((p: any) => p.symbol === order.symbol)
 
@@ -160,6 +161,8 @@ class Broker {
         status: 'rejected'
       }
 
+      console.warn('cannot fill order', data)
+
       this.eventHandler?.onOrder(data)
       return data
     }
@@ -191,7 +194,7 @@ class Broker {
           this.changeCash(this.getCash() + (helpers.position.value(closedPart, today) - order.fillCommision))
           this.eventHandler?.onPosition(p)
         } else {
-            // Close the position
+          // Close the position
           p.closeDate = order.fillDate
           p.closePrice = order.fillPrice
           p.closeBar = order.fillBar

@@ -1,13 +1,5 @@
-import { Bars, FilledOrder, Order, Position } from "../types"
-import dayjs from "dayjs"
+import { FilledOrder, Position } from "../types"
 import { floorNumber } from "./number"
-
-const getToday = (symbol: string, bars: Bars) => {
-  const arr = bars[symbol] ?? []
-  const today = arr[0]
-
-  return today
-}
 
 const isOpen = (position: Position) => {
   return position.closeDate === null || position.closeDate === undefined
@@ -49,33 +41,6 @@ const closePosition = (position: Position, order: FilledOrder): Position => {
   return data
 }
 
-const generateClosePositions = (openPositions: Position[], bars: Bars, closePrices?: number[]) => {
-  const res: Order[] = []
-
-  openPositions.forEach((position, index) => {
-    const today = getToday(position.symbol, bars)
-    const closePrice = closePrices?.[index] ??  today.close
-    const action = position.side === 'long' ? 'sell' : 'buy'
-    if (today) {
-      const datetime = dayjs(today.date).isSame(dayjs(), 'day') ? Date.now() : today.date
-      const order: Order = {
-        symbol: today.symbol,
-        date: datetime,
-        dateFormatted: dayjs(datetime).toISOString(),
-        price: closePrice,
-        units: position.units ?? 0,
-        isClose: true,
-        value: closePrice * (position.units ?? 0),
-        action,
-        status: 'created',
-      }
-      res.push(order)
-    }
-  })
-
-  return res
-}
-
 const value = (p: Position, today?: any) => {
   const closePrice = p.closePrice ?? today?.close ?? 0
   const pl = floorNumber((closePrice - p.openPrice) * p.units, 2) * (p.side === 'long' ? 1 : -1)
@@ -88,6 +53,5 @@ export default {
   isClose,
   openPosition,
   closePosition,
-  value,
-  generateClosePositions
+  value
 }

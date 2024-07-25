@@ -1,6 +1,13 @@
-import { Bars, Order, OrderAction } from "../types"
+import { Bars, Order, OrderAction, Position } from "../types"
 import { floorNumber } from "./number"
 import dayjs from "dayjs"
+
+const getToday = (symbol: string, bars: Bars) => {
+  const arr = bars[symbol] ?? []
+  const today = arr[0]
+
+  return today
+}
 
 /**
  * Create orders based on the weights and units
@@ -100,9 +107,40 @@ const sameSide = (order, position) => {
   return (position.side === 'long' && order.action === 'buy') || (position.side === 'short' && order.action === 'sell')
 }
 
+
+const generateCloseOrders = (openPositions: Position[], bars: Bars, closePrices?: number[]) => {
+  const res: Order[] = []
+
+  openPositions.forEach((position, index) => {
+    const today = getToday(position.symbol, bars)
+    const closePrice = closePrices?.[index] ?? today.close
+    const action = position.side === 'long' ? 'sell' : 'buy'
+
+    if (today) {
+      const datetime = dayjs(today.date).isSame(dayjs(), 'day') ? Date.now() : today.date
+      const order: Order = {
+        symbol: today.symbol,
+        date: datetime,
+        dateFormatted: dayjs(datetime).toISOString(),
+        price: closePrice,
+        units: position.units ?? 0,
+        isClose: true,
+        limitPrice: closePrices?.[index],
+        value: closePrice * (position.units ?? 0),
+        action,
+        status: 'created',
+      }
+      res.push(order)
+    }
+  })
+
+  return res
+}
+
 export default {
   createOrdersUnits,
   createOrdersAmount,
+  generateCloseOrders,
   sameSide,
   mergeOrders
 }
