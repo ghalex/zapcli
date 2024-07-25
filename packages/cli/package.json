@@ -1,6 +1,6 @@
 {
   "name": "@zapcli/cli",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "A CLI tool for backtesting and trading",
   "main": "dist/zapcli.es.mjs",
   "module": "dist/zapcli.es.mjs",
@@ -73,6 +73,6 @@
     "ramda": "^0.30.1",
     "shelljs": "^0.8.5",
     "voca": "^1.4.1",
-    "zplang": "^1.0.56"
+    "zplang": "^1.0.57"
   }
 }

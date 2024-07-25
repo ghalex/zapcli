@@ -1,5 +1,11 @@
 # @zapcli/cli
 
+## 1.0.24
+
+### Patch Changes
+
+- update zplang
+
 ## 1.0.23
 
 ### Patch Changes
