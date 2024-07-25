@@ -1,5 +1,11 @@
 # @zapcli/core
 
+## 1.0.9
+
+### Patch Changes
+
+- add more functions
+
 ## 1.0.8
 
 ### Patch Changes
