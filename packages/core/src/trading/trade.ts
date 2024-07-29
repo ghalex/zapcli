@@ -2,6 +2,7 @@ import type { Order, Position, Bar, OrderOptions } from '../types'
 import helpers from '../helpers'
 import assets from './assets'
 import dayjs from 'dayjs'
+import { round } from '@/helpers/number'
 
 const zpTrade = (env) => {
   const { bars } = env
@@ -20,7 +21,8 @@ const zpTrade = (env) => {
     if (data.positions.length === 0) return data.cash
 
     return data.cash + data.positions.reduce((acc, p) => {
-      const bar = asset(p.symbol) ?? { close: p.openPrice }
+      const barsForSymbol = bars[p.symbol]
+      const bar = barsForSymbol?.[0] ?? { close: p.openPrice }
       return acc + p.units * bar.close
     }, 0)
   }
@@ -99,7 +101,7 @@ const zpTrade = (env) => {
 
         if (Math.abs(diffAmount) > minDiff) {
           const action = diff > 0 ? 'buy' : 'sell'
-          const [diffOrder] = helpers.order.createOrdersUnits([symbol], { [symbol]: 1 }, Math.abs(diff), action, bars)
+          const [diffOrder] = helpers.order.createOrdersUnits([symbol], { [symbol]: 1 }, Math.abs(diff), action, bars, { round: settings.round ?? false })
 
           if (!helpers.order.sameSide(diffOrder, pos)) {
             diffOrder.isClose = true
