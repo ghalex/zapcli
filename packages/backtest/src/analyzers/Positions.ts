@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import BaseAnalyzer from './BaseAnalyzer'
+import { currencyFormat } from '../utils'
 
 class PositionsAnalyzer extends BaseAnalyzer {
   name = 'positions'
@@ -11,8 +12,15 @@ class PositionsAnalyzer extends BaseAnalyzer {
       map((p) => {
         return {
           ...p,
-          openDate: dayjs(p.openDate).format('YYYY-MM-DDTHH:mm'),
-          closeDate: p.closeDate ? dayjs(p.closeDate).format('YYYY-MM-DDTHH:mm') : null
+          openDate: dayjs(p.openDate).format('YYYY-MM-DD'),
+          closeDate: p.closeDate ? dayjs(p.closeDate).format('YYYY-MM-DD') : null
+        }
+      }).map((p) => {
+        const { stats, ...rest } = p
+        return {
+          ...rest,
+          pl: parseFloat(stats.pl.toFixed(2)),
+          value: parseFloat(stats.value.toFixed(2))
         }
       })
 
@@ -25,10 +33,10 @@ class PositionsAnalyzer extends BaseAnalyzer {
     }
 
     console.table(this.data.map((p) => {
-      const { stats, ...rest } = p
       return {
-        ...rest,
-        pl: stats.pl.toFixed(2)
+        ...p,
+        pl: currencyFormat(p.pl),
+        value: currencyFormat(p.value)
       }
     }))
   }

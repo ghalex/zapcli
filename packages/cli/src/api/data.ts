@@ -39,7 +39,7 @@ export default (config) => {
    */
   const downloadZapant = async (symbols: string[], window: number, options: DataDownloadOptions) => {
     if (!storage.get('accessToken')) {
-      throw new Error('You must be logged in to download data. Please run `zplang login` command.')
+      throw new Error('You must be logged in to download data. Please run `zapcli login` command.')
     }
 
     const { resolution, end } = options
@@ -65,7 +65,7 @@ export default (config) => {
     } catch (e: any) {
       if (e.response) {
         if (e.response.status === 401) {
-          throw new Error('You must be logged in to download data. Please run `zplang login` command.')
+          throw new Error('You must be logged in to download data. Please run `zapcli login` command.')
         }
 
         throw new Error(e.response.data.message)
@@ -100,6 +100,9 @@ export default (config) => {
       throw new Error(`${resolution} resolution not supported`)
     }
 
+    console.log(symbols, window + 1, resolution)
+    // console.log(calendar.getDaysUntil(dayjs().toDate(), , resolution))
+
     const interval = resolution ? resolutionMap[resolution] : '1d'
     const isCrypto = symbols.some(s => s.includes('/'))
     const endDate = end ? dayjs(end).add(1, 'days').unix() : dayjs().unix()
@@ -107,8 +110,8 @@ export default (config) => {
       ? dayjs.unix(endDate).subtract(window, 'days').unix()
       : dayjs(
         calendar.getDaysUntil(dayjs.unix(endDate).toDate(), window + 1, resolution)?.[0]?.date
-        ).unix()
-    
+      ).unix()
+
     const promises = symbols.map(async (symbol) => {
       const formattedSymbol = symbol.replace('/', '-')
       const url = `/${formattedSymbol}?period1=${startDate}&period2=${endDate}&interval=${interval}&events=history`
@@ -137,12 +140,12 @@ export default (config) => {
     return formatted
   }
 
-  const download = async (provider: string, symbols: string[], window: number, options: DataDownloadOptions) => {
+  const download = async (provider: string, symbols: string[], window: number | any, options: DataDownloadOptions) => {
     switch (provider) {
       case 'zapant':
-        return downloadZapant(symbols, window, options)
+        return downloadZapant(symbols, parseInt(window), options)
       case 'yahoo':
-        return downloadYahoo(symbols, window, options)
+        return downloadYahoo(symbols, parseInt(window), options)
       default:
         throw new Error('Invalid provider')
     }

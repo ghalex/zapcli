@@ -1,16 +1,19 @@
 import TableBuilder from 'table-builder'
-import { formatNumber } from '../utils'
+import { formatNumber, percentageFormat } from '../utils'
 import BaseReport from './Report'
 
 class PositionsReport extends BaseReport {
-  name = 'returns'
+  name = 'positions'
 
   render(data: any[]): HTMLElement[] {
     const plotData = data.map((d) => {
+      const invested = d.openPrice * d.units
       return {
         ...d,
         openPrice: formatNumber(d.openPrice),
-        closePrice: formatNumber(d.closePrice)
+        closePrice: formatNumber(d.closePrice),
+        pl: d.pl ? `${formatNumber(d.pl)} (${percentageFormat(d.pl * 100 / invested)})` : '-',
+        invested: formatNumber(d.openPrice * d.units)
       }
     })
 
@@ -23,7 +26,9 @@ class PositionsReport extends BaseReport {
       closePrice: 'Close Price',
       closeBar: 'Close Bar',
       units: 'Units',
-      side: 'Side'
+      side: 'Side',
+      invested: 'Invested',
+      pl: 'P/L'
     }
 
     const table = new TableBuilder({ 'class': 'styled-table' })

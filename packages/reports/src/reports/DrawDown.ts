@@ -59,17 +59,17 @@ class DrawDownReport extends BaseReport {
           filter: filterMaxDrawDown
         }),
         Plot.dot(plotDDData, { x: "date", y: d => d.max - d.moneyDown, fill: 'red', fillOpacity: 0.5, stroke: 'red', symbol: "cross", filter: p => p.moneyDown === data.maxMoneyDown }),
-        Plot.lineY(plotDDData, { x: "date", y: "max", stroke: 'orange', strokeWidth: 1, filter: (x) => !filterMaxDrawDown(x) }),
-        Plot.areaY(plotDDData, {
-          x: "date",
-          y1: (d) => d.max,
-          y2: (d) => d.max - d.moneyDown,
-          fill: "orange", // Color of the area
-          opacity: 0.3, // Transparency of the area,
-          filter: (x) => !filterMaxDrawDown(x)
-        }),
+        // Plot.lineY(plotDDData, { x: "date", y: "max", stroke: 'orange', strokeWidth: 1, filter: (x) => !filterMaxDrawDown(x) })
+        // Plot.areaY(plotDDData, {
+        //   x: "date",
+        //   y1: (d) => d.max,
+        //   y2: (d) => d.max - d.moneyDown,
+        //   fill: "orange", // Color of the area
+        //   opacity: 0.3, // Transparency of the area,
+        //   filter: (x) => !filterMaxDrawDown(x)
+        // }),
         Plot.lineY(plotDDData, { x: "date", y: d => d.max - d.moneyDown, tip: true }),
-        // Plot.dot(plotDDData, { x: "date", y: "max", fill: 'gray', stroke: 'red', filter: filterEqual }),
+        Plot.dot(plotDDData, { x: "date", y: "max", fill: 'gray', stroke: 'red', filter: filterEqual }),
         // Plot.text(annotations, { x: "date", y: "y", text: "text", textAnchor: "start", lineAnchor: 'bottom', frameAnchor: 'bottom', fontSize: 12, fontWeight: "bold", fill: "red" })
       ]
     })

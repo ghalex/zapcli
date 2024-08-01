@@ -93,24 +93,24 @@ const config = {
   backtestsDir: "./dev/backtests",
   dataProvider: "zapant", // async (params) => [{...}]
   execute: {
-    date: "2024-07-18",
+    date: "2024-07-10",
     // errors: "./dev/errors.txt",
     inputs: {
       symbols: [],
       initialCapital: 10000,
-      cash: 5000,
+      cash: 10000,
       openPositions: [
-        ...samplePositions
+        // ...samplePositions
       ] // samplePositions
     },
   },
   backtest: {
-    startDate: "2024-04-14",
-    endDate: "2024-07-18",
+    startDate: "2023-01-01",
+    endDate: "2024-07-10",
     analyzers: [
       new analyzers.RetursAnalyzer(),
       new analyzers.DrawDownAnalyzer(),
-      //new analyzers.TradesAnalyzer(),
+      new analyzers.TradesAnalyzer(),
       new analyzers.PositionsAnalyzer(),
       // new LogAnalyzer(),
     ]

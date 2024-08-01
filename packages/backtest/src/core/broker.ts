@@ -161,7 +161,7 @@ class Broker {
         status: 'rejected'
       }
 
-      console.warn('cannot fill order', data)
+      console.warn(`Cannot fill order ${data.symbol} at bar ${this.barIndex}, Required: ${fillCost + fillCommision}, Available: ${this.getCash()}`)
 
       this.eventHandler?.onOrder(data)
       return data
@@ -169,7 +169,7 @@ class Broker {
   }
 
   fillOrders(orders: any) {
-    return orders.map((order: any) => this.fillOrder(order, this.bars[order.symbol]))
+    return orders.sort(a => a.isClose ? -1 : 1).map((order: any) => this.fillOrder(order, this.bars[order.symbol]))
   }
 
   executeOrder(order: any) {

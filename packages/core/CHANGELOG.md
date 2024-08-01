@@ -1,5 +1,11 @@
 # @zapcli/core
 
+## 1.0.12
+
+### Patch Changes
+
+- change reports for dd and positions
+
 ## 1.0.11
 
 ### Patch Changes

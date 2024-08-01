@@ -1,5 +1,5 @@
 import assert from '../helpers/assert'
-import { pluck, head, take, tail } from 'ramda'
+import { pluck, head, take, tail, sum } from 'ramda'
 
 const zpCore = (env) => {
   const { stdout } = env
@@ -9,6 +9,7 @@ const zpCore = (env) => {
     head,
     take,
     tail,
+    sum,
     crossover: (bars, value) => {
       assert(bars.length === 2, 'crossover requires 2 bars')
 

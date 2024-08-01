@@ -19,3 +19,10 @@ export const formatNumber = (val) => {
     return val.toLocaleString('en-US', op)
   }
 }
+
+export const percentageFormat = (value: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 2
+  }).format(value / 100)
+}

@@ -1,5 +1,14 @@
 # @zapcli/cli
 
+## 1.0.26
+
+### Patch Changes
+
+- change reports for dd and positions
+- Updated dependencies
+  - @zapcli/backtest@1.0.12
+  - @zapcli/core@1.0.12
+
 ## 1.0.25
 
 ### Patch Changes
