@@ -45,10 +45,29 @@ zapcli create MyProject
 zapcli backtest ./src/hello.zp
 ```
 
-Useful links:
+## Simple example
+
+Buy one share of AAPL if price over EMA 30
+```javascript
+const assets = ["AAPL"]
+const window = 30
+const settings = {}
+
+function run() {
+  const AAPL = this.asset(assets[0])
+  const ema = this.ema(AAPL, 30)
+
+  if (AAPL.close > ema) {
+    this.buy(AAPL, 1)
+  }
+}
+
+return { assets, settings, window, run }
+```
+
+## Useful links:
 
 - [Getting Started](https://zapcli.com/getting-started/) full guide.
-
 - [View on Github](https://github.com/ghalex/zapcli)
 
 ## License
