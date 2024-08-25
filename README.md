@@ -35,7 +35,7 @@
 
 ## Documentation
 
-To learn more about ZapCLI read the documentation [here](https://zapcli.com/)
+To learn more about ZapCLI read the documentation [here](https://zapcli.com/) or [watch a video](https://www.youtube.com/watch?v=4-dnBD4YWwU)
 
 ## Get Started
 
